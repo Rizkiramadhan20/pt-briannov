@@ -30,7 +30,7 @@ if (isset($_POST['register'])) {
     }
 
     // Check if email exists
-    $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt = $db->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -42,7 +42,7 @@ if (isset($_POST['register'])) {
 
     // Hash password and insert user
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $stmt = $conn->prepare("INSERT INTO users (fullname, email, password, role) VALUES (?, ?, ?, ?)");
+    $stmt = $db->prepare("INSERT INTO users (fullname, email, password, role) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $name, $email, $hashed_password, $role);
     
     if ($stmt->execute()) {
@@ -65,7 +65,7 @@ if (isset($_POST['login'])) {
     }
 
     // Get user
-    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt = $db->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();

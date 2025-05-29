@@ -86,7 +86,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <!-- Desktop Button -->
     <div class="hidden md:block">
       <a
-        href="/compon/login.php"
+        href="/login.php"
         class="border border-gray-400 text-gray-600 px-4 py-2 rounded-full hover:bg-gray-100"
         >Let's Talk</a
       >

@@ -93,3 +93,4 @@ if (!isset($user)) {
 </header>
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+<script src="../js/main.js"></script> 

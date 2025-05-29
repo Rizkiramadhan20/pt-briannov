@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root"; // atau sesuai server kamu
 $pass = "";
-$db   = "crud";
+$db   = "compon";
 
 $conn = new mysqli($host, $user, $pass, $db);
 

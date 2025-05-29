@@ -37,92 +37,59 @@
                 </a>
             </li>
             <li>
-                <button type="button" class="flex items-center w-full p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200" aria-controls="dropdown-assets" data-collapse-toggle="dropdown-assets">
-                    <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">pie_chart</span>
-                    <span class="flex-1 ml-3 text-left whitespace-nowrap">Assets</span>
-                    <span class="material-icons text-gray-400 group-hover:text-white transition-transform duration-200">expand_more</span>
-                </button>
-                <ul id="dropdown-assets" class="hidden py-2 space-y-2 transition-all duration-200">
-                    <li>
-                        <a href="#" class="flex items-center w-full p-2 text-white transition duration-200 rounded-lg pl-11 group hover:bg-[#23263A]">
-                            <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">account_balance</span>
-                            <span class="ml-3">My Assets</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center w-full p-2 text-white transition duration-200 rounded-lg pl-11 group hover:bg-[#23263A]">
-                            <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">trending_up</span>
-                            <span class="ml-3">Market</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center w-full p-2 text-white transition duration-200 rounded-lg pl-11 group hover:bg-[#23263A]">
-                            <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">analytics</span>
-                            <span class="ml-3">Analytics</span>
-                        </a>
-                    </li>
-                </ul>
+                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200">
+                    <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">home</span>
+                    <span class="ml-3">Home</span>
+                </a>
             </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200">
+                    <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">info</span>
+                    <span class="ml-3">About</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200">
+                    <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">numbers</span>
+                    <span class="ml-3">Count</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200">
+                    <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">miscellaneous_services</span>
+                    <span class="ml-3">Services</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200">
+                    <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">people</span>
+                    <span class="ml-3">Costumer</span>
+                </a>
+            </li>
+          
             <li>
                 <button type="button" class="flex items-center w-full p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200" aria-controls="dropdown-staking" data-collapse-toggle="dropdown-staking">
                     <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">bar_chart</span>
-                    <span class="flex-1 ml-3 text-left whitespace-nowrap">Staking</span>
+                    <span class="flex-1 ml-3 text-left whitespace-nowrap">Accounts</span>
                     <span class="material-icons text-gray-400 group-hover:text-white transition-transform duration-200">expand_more</span>
                 </button>
                 <ul id="dropdown-staking" class="hidden py-2 space-y-2 transition-all duration-200">
                     <li>
                         <a href="#" class="flex items-center w-full p-2 text-white transition duration-200 rounded-lg pl-11 group hover:bg-[#23263A]">
-                            <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">add_circle</span>
-                            <span class="ml-3">Stake Now</span>
+                            <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">admin_panel_settings</span>
+                            <span class="ml-3">Admins</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="flex items-center w-full p-2 text-white transition duration-200 rounded-lg pl-11 group hover:bg-[#23263A]">
-                            <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">remove_circle</span>
-                            <span class="ml-3">Unstake</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center w-full p-2 text-white transition duration-200 rounded-lg pl-11 group hover:bg-[#23263A]">
-                            <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">savings</span>
-                            <span class="ml-3">Rewards</span>
+                            <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">group</span>
+                            <span class="ml-3">Users</span>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li>
-                <button type="button" class="flex items-center w-full p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200" aria-controls="dropdown-wallet" data-collapse-toggle="dropdown-wallet">
-                    <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">account_balance_wallet</span>
-                    <span class="flex-1 ml-3 text-left whitespace-nowrap">Wallet</span>
-                    <span class="material-icons text-gray-400 group-hover:text-white transition-transform duration-200">expand_more</span>
-                </button>
-                <ul id="dropdown-wallet" class="hidden py-2 space-y-2 transition-all duration-200">
-                    <li>
-                        <a href="#" class="flex items-center w-full p-2 text-white transition duration-200 rounded-lg pl-11 group hover:bg-[#23263A]">
-                            <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">send</span>
-                            <span class="ml-3">Send</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center w-full p-2 text-white transition duration-200 rounded-lg pl-11 group hover:bg-[#23263A]">
-                            <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">download</span>
-                            <span class="ml-3">Receive</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center w-full p-2 text-white transition duration-200 rounded-lg pl-11 group hover:bg-[#23263A]">
-                            <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">swap_horiz</span>
-                            <span class="ml-3">Swap</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200">
-                    <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">history</span>
-                    <span class="ml-3">History</span>
-                </a>
-            </li>
+
             <li>
                 <button type="button" class="flex items-center w-full p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200" aria-controls="dropdown-settings" data-collapse-toggle="dropdown-settings">
                     <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">settings</span>
@@ -166,69 +133,4 @@
     </div>
 </aside>
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const sidebar = document.getElementById('sidebar-mobile');
-    const backdrop = document.getElementById('sidebar-mobile-backdrop');
-    const toggleButtons = document.querySelectorAll('[data-drawer-toggle="sidebar-mobile"]');
-    const hideButtons = document.querySelectorAll('[data-drawer-hide="sidebar-mobile"]');
-    const dropdownButtons = document.querySelectorAll('[data-collapse-toggle]');
-    
-    // Toggle sidebar
-    function toggleSidebar() {
-        sidebar.classList.toggle('-translate-x-full');
-        backdrop.classList.toggle('hidden');
-        document.body.classList.toggle('overflow-hidden');
-    }
-
-    // Hide sidebar
-    function hideSidebar() {
-        if (!sidebar.classList.contains('-translate-x-full')) {
-            sidebar.classList.add('-translate-x-full');
-            backdrop.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }
-    }
-
-    // Add click event listeners
-    toggleButtons.forEach(button => button.addEventListener('click', toggleSidebar));
-    hideButtons.forEach(button => button.addEventListener('click', hideSidebar));
-    
-    // Improved backdrop click handling
-    backdrop.addEventListener('click', function(e) {
-        if (e.target === backdrop) {
-            hideSidebar();
-        }
-    });
-
-    // Handle dropdown animations
-    dropdownButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const targetId = this.getAttribute('aria-controls');
-            const target = document.getElementById(targetId);
-            const arrow = this.querySelector('.material-icons:last-child');
-            
-            // Toggle dropdown
-            target.classList.toggle('hidden');
-            
-            // Rotate arrow
-            if (target.classList.contains('hidden')) {
-                arrow.style.transform = 'rotate(0deg)';
-            } else {
-                arrow.style.transform = 'rotate(180deg)';
-            }
-        });
-    });
-
-    // Handle window resize
-    window.addEventListener('resize', function() {
-        if (window.innerWidth >= 640) { // sm breakpoint
-            sidebar.classList.remove('-translate-x-full');
-            backdrop.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }
-    });
-});
-</script> 
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 

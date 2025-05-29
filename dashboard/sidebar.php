@@ -31,40 +31,47 @@
         <!-- Navigation -->
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="/dashboard/dashboard.php" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200">
+                <a href="/compon/dashboard/dashboard.php" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200 <?= basename($_SERVER['PHP_SELF']) === 'dashboard.php' ? 'bg-[#23263A]' : '' ?>">
                     <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">dashboard</span>
                     <span class="ml-3">Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200">
+                <a href="/compon/dashboard/home/home.php" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200 <?= strpos($_SERVER['PHP_SELF'], 'home.php') !== false ? 'bg-[#23263A]' : '' ?>">
                     <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">home</span>
                     <span class="ml-3">Home</span>
                 </a>
             </li>
+
             <li>
-                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200">
+                <a href="/compon/dashboard/partner/partner.php" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200 <?= strpos($_SERVER['PHP_SELF'], 'partner.php') !== false ? 'bg-[#23263A]' : '' ?>">
+                    <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">home</span>
+                    <span class="ml-3">Partner</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/compon/dashboard/about/about.php" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200 <?= strpos($_SERVER['PHP_SELF'], 'about.php') !== false ? 'bg-[#23263A]' : '' ?>">
                     <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">info</span>
                     <span class="ml-3">About</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200">
+                <a href="/compon/dashboard/count/count.php" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200 <?= strpos($_SERVER['PHP_SELF'], 'count.php') !== false ? 'bg-[#23263A]' : '' ?>">
                     <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">numbers</span>
                     <span class="ml-3">Count</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200">
+                <a href="/compon/dashboard/services/services.php" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200 <?= strpos($_SERVER['PHP_SELF'], 'services.php') !== false ? 'bg-[#23263A]' : '' ?>">
                     <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">miscellaneous_services</span>
                     <span class="ml-3">Services</span>
                 </a>
             </li>
-
             <li>
-                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200">
+                <a href="/compon/dashboard/customers/customers.php" class="flex items-center p-2 text-white rounded-lg hover:bg-[#23263A] group transition-all duration-200 <?= strpos($_SERVER['PHP_SELF'], 'customers.php') !== false ? 'bg-[#23263A]' : '' ?>">
                     <span class="material-icons text-gray-400 group-hover:text-white transition-colors duration-200">people</span>
-                    <span class="ml-3">Costumer</span>
+                    <span class="ml-3">Customers</span>
                 </a>
             </li>
           

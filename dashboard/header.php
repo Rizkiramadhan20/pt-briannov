@@ -23,20 +23,20 @@ try {
 } catch (Exception $e) {}
 ?>
 <header class="fixed top-0 right-0 left-0 sm:left-64 z-30">
-    <nav class="bg-[#23263A] border-b border-gray-700 px-4 py-2.5">
+    <nav class="bg-white border-b border-gray-200 px-4 py-2.5">
         <div class="flex flex-wrap justify-between items-center">
             <div class="flex justify-start items-center">
                 <button data-drawer-target="sidebar-mobile" data-drawer-toggle="sidebar-mobile"
                     aria-controls="sidebar-mobile" type="button"
-                    class="inline-flex items-center p-2 text-sm text-gray-400 rounded-lg sm:hidden hover:bg-[#1E2028] focus:outline-none focus:ring-2 focus:ring-gray-600">
+                    class="inline-flex items-center p-2 text-sm text-gray-600 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
                     <span class="material-icons">menu</span>
                 </button>
-                <span class="self-center text-xl font-semibold whitespace-nowrap text-white ml-4">Dashboard</span>
+                <span class="self-center text-xl font-semibold whitespace-nowrap text-gray-900 ml-4">Dashboard</span>
             </div>
             <div class="flex items-center lg:order-2 gap-2">
                 <!-- Notifications -->
                 <button type="button" data-dropdown-toggle="notification-dropdown"
-                    class="p-2 text-gray-400 rounded-lg hover:text-white hover:bg-[#1E2028] focus:outline-none focus:ring-2 focus:ring-gray-600 relative">
+                    class="p-2 text-gray-600 rounded-lg hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 relative">
                     <span class="material-icons">notifications</span>
                     <?php if ($unread_contacts > 0): ?>
                     <span
@@ -44,23 +44,23 @@ try {
                     <?php endif; ?>
                 </button>
                 <!-- Dropdown menu -->
-                <div class="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-[#23263A] rounded-lg divide-y divide-gray-700 shadow-lg"
+                <div class="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white rounded-lg divide-y divide-gray-200 shadow-lg"
                     id="notification-dropdown">
-                    <div class="block py-2 px-4 text-base font-medium text-center text-gray-400 bg-[#1E2028]">
+                    <div class="block py-2 px-4 text-base font-medium text-center text-gray-600 bg-gray-50">
                         Notifications
                     </div>
                     <div class="max-h-96 overflow-y-auto">
                         <?php if (count($unread_contacts_list) > 0): ?>
                         <?php foreach ($unread_contacts_list as $contact): ?>
                         <div
-                            class="flex py-3 px-4 border-b border-gray-700 hover:bg-[#1E2028] transition-colors duration-200">
+                            class="flex py-3 px-4 border-b border-gray-200 hover:bg-gray-50 transition-colors duration-200">
                             <div class="flex-shrink-0">
-                                <span class="material-icons text-blue-500">mail</span>
+                                <span class="material-icons text-blue-600">mail</span>
                             </div>
                             <div class="pl-3 w-full">
-                                <div class="text-gray-400 text-sm mb-1.5 font-semibold">
+                                <div class="text-gray-900 text-sm mb-1.5 font-semibold">
                                     <?php echo htmlspecialchars($contact['name']); ?></div>
-                                <div class="text-xs text-gray-400 mb-1">
+                                <div class="text-xs text-gray-600 mb-1">
                                     <?php echo htmlspecialchars($contact['email']); ?></div>
                                 <div class="text-xs text-gray-500">
                                     <?php echo date('d M Y H:i', strtotime($contact['created_at'])); ?></div>
@@ -68,11 +68,11 @@ try {
                         </div>
                         <?php endforeach; ?>
                         <?php else: ?>
-                        <div class="py-4 px-4 text-center text-gray-400">No new contact messages.</div>
+                        <div class="py-4 px-4 text-center text-gray-600">No new contact messages.</div>
                         <?php endif; ?>
                     </div>
                     <a href="/dashboard/contact/contact.php"
-                        class="block py-2 text-sm font-medium text-center text-gray-400 hover:bg-[#1E2028] transition-colors duration-200">
+                        class="block py-2 text-sm font-medium text-center text-gray-600 hover:bg-gray-50 transition-colors duration-200">
                         <div class="inline-flex items-center">
                             View all
                         </div>
@@ -81,29 +81,29 @@ try {
 
                 <!-- Profile -->
                 <button type="button"
-                    class="flex text-sm bg-[#1E2028] rounded-lg md:mr-0 focus:ring-4 focus:ring-gray-600 hover:bg-[#2A2D3A] transition-colors duration-200"
+                    class="flex text-sm bg-gray-50 rounded-lg md:mr-0 focus:ring-4 focus:ring-gray-200 hover:bg-gray-100 transition-colors duration-200"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                     data-dropdown-placement="bottom">
                     <span class="sr-only">Open user menu</span>
                     <div class="flex items-center gap-2 px-4 py-2">
-                        <span class="material-icons text-gray-400">account_circle</span>
+                        <span class="material-icons text-gray-600">account_circle</span>
                         <span
-                            class="text-white font-medium hidden sm:inline"><?= htmlspecialchars($user['fullname'] ?? 'Admin') ?></span>
+                            class="text-gray-900 font-medium hidden sm:inline"><?= htmlspecialchars($user['fullname'] ?? 'Admin') ?></span>
                     </div>
                 </button>
                 <!-- Dropdown menu -->
-                <div class="hidden z-50 my-4 text-base list-none bg-[#23263A] rounded-lg divide-y divide-gray-700 shadow-lg"
+                <div class="hidden z-50 my-4 text-base list-none bg-white rounded-lg divide-y divide-gray-200 shadow-lg"
                     id="user-dropdown">
                     <div class="py-3 px-4">
                         <span
-                            class="block text-sm text-white"><?= htmlspecialchars($user['fullname'] ?? 'Admin') ?></span>
+                            class="block text-sm text-gray-900"><?= htmlspecialchars($user['fullname'] ?? 'Admin') ?></span>
                         <span
-                            class="block text-sm text-gray-400 truncate"><?= htmlspecialchars($user['email'] ?? 'admin@example.com') ?></span>
+                            class="block text-sm text-gray-600 truncate"><?= htmlspecialchars($user['email'] ?? 'admin@example.com') ?></span>
                     </div>
                     <ul class="py-1" aria-labelledby="user-menu-button">
                         <li>
                             <a href="/logout.php"
-                                class="flex items-center py-2 px-4 text-sm text-gray-400 hover:bg-[#1E2028] transition-colors duration-200">
+                                class="flex items-center py-2 px-4 text-sm text-gray-600 hover:bg-gray-50 transition-colors duration-200">
                                 <span class="material-icons text-sm mr-2">logout</span>
                                 Sign out
                             </a>

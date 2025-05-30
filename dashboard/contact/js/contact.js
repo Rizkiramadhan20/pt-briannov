@@ -64,91 +64,138 @@ function closeModal(modalId) {
 }
 
 // View Message
-document.querySelectorAll(".view-message").forEach((button) => {
-  button.addEventListener("click", function () {
-    const name = this.getAttribute("data-name");
-    const email = this.getAttribute("data-email");
-    const subject = this.getAttribute("data-subject");
-    const message = this.getAttribute("data-message");
+document.addEventListener("DOMContentLoaded", function () {
+  // View Message Modal
+  const viewButtons = document.querySelectorAll(".view-message");
+  viewButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const name = this.getAttribute("data-name");
+      const email = this.getAttribute("data-email");
+      const subject = this.getAttribute("data-subject");
+      const message = this.getAttribute("data-message");
 
-    document.getElementById("view-name").textContent = name;
-    document.getElementById("view-email").textContent = email;
-    document.getElementById("view-subject").textContent = subject;
-    document.getElementById("view-message").textContent = message;
-  });
-});
-
-// Delete Message
-let messageIdToDelete = null;
-
-document.querySelectorAll(".delete-message").forEach((button) => {
-  button.addEventListener("click", function () {
-    messageIdToDelete = this.getAttribute("data-id");
-  });
-});
-
-document.getElementById("confirmDelete").addEventListener("click", function () {
-  if (!messageIdToDelete) return;
-
-  const button = this;
-  const deleteText = button.querySelector(".delete-text");
-  const deleteLoading = button.querySelector(".delete-loading");
-
-  // Show loading state
-  deleteText.classList.add("hidden");
-  deleteLoading.classList.remove("hidden");
-  button.disabled = true;
-
-  // Send delete request
-  fetch("delete_contact.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: "id=" + messageIdToDelete,
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // Close modal first
-      closeModal("deleteMessageModal");
-
-      if (data.success) {
-        // Remove the row from the table
-        const row = document
-          .querySelector(`[data-id="${messageIdToDelete}"]`)
-          .closest("tr");
-        if (row) {
-          row.remove();
-        }
-
-        // Show success message
-        showToast(data.message || "Message deleted successfully", "success");
-
-        // Check if table is empty
-        const tbody = document.querySelector("tbody");
-        if (tbody && tbody.children.length === 0) {
-          location.reload(); // Reload to show empty state
-        }
-      } else {
-        showToast(data.message || "Failed to delete message", "error");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      // Close modal even if there's an error
-      closeModal("deleteMessageModal");
-      showToast("An error occurred while deleting the message", "error");
-    })
-    .finally(() => {
-      // Reset button state
-      deleteText.classList.remove("hidden");
-      deleteLoading.classList.add("hidden");
-      button.disabled = false;
-      messageIdToDelete = null;
+      document.getElementById("view-name").textContent = name;
+      document.getElementById("view-email").textContent = email;
+      document.getElementById("view-subject").textContent = subject;
+      document.getElementById("view-message").textContent = message;
     });
+  });
+
+  // Reply Message Modal
+  const replyButtons = document.querySelectorAll(".reply-message");
+  replyButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const contactId = this.getAttribute("data-id");
+      const email = this.getAttribute("data-email");
+      const subject = document
+        .querySelector(`[data-id="${contactId}"]`)
+        .closest("tr")
+        .querySelector("td:nth-child(3)").textContent;
+
+      // Open Gmail compose URL
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+        email
+      )}&su=${encodeURIComponent("Re: " + subject)}`;
+      window.open(gmailUrl, "_blank");
+    });
+  });
+
+  // Reply Form Submit
+  const replyForm = document.getElementById("replyForm");
+  if (replyForm) {
+    replyForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const submitButton = this.querySelector('button[type="submit"]');
+      const replyText = submitButton.querySelector(".reply-text");
+      const replyLoading = submitButton.querySelector(".reply-loading");
+
+      // Show loading state
+      replyText.classList.add("hidden");
+      replyLoading.classList.remove("hidden");
+      submitButton.disabled = true;
+
+      try {
+        const formData = new FormData(this);
+        const response = await fetch("utils/process_reply.php", {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showToast("Reply sent successfully!", "success");
+          // Close modal
+          const modal = document.getElementById("replyMessageModal");
+          const modalInstance = flowbite.Modal.getInstance(modal);
+          modalInstance.hide();
+          // Reset form
+          this.reset();
+        } else {
+          showToast(result.message || "Failed to send reply", "error");
+        }
+      } catch (error) {
+        showToast("An error occurred while sending the reply", "error");
+      } finally {
+        // Reset button state
+        replyText.classList.remove("hidden");
+        replyLoading.classList.add("hidden");
+        submitButton.disabled = false;
+      }
+    });
+  }
+
+  // Delete Message
+  const deleteButtons = document.querySelectorAll(".delete-message");
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const contactId = this.getAttribute("data-id");
+      const confirmDeleteBtn = document.getElementById("confirmDelete");
+
+      confirmDeleteBtn.onclick = async function () {
+        const deleteText = this.querySelector(".delete-text");
+        const deleteLoading = this.querySelector(".delete-loading");
+
+        // Show loading state
+        deleteText.classList.add("hidden");
+        deleteLoading.classList.remove("hidden");
+        this.disabled = true;
+
+        try {
+          const response = await fetch("utils/delete_contact.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: contactId }),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            showToast("Message deleted successfully!", "success");
+            // Remove the row from the table
+            const row = document
+              .querySelector(`[data-id="${contactId}"]`)
+              .closest("tr");
+            row.remove();
+            // Close modal
+            const modal = document.getElementById("deleteMessageModal");
+            const modalInstance = flowbite.Modal.getInstance(modal);
+            modalInstance.hide();
+          } else {
+            showToast(result.message || "Failed to delete message", "error");
+          }
+        } catch (error) {
+          showToast("An error occurred while deleting the message", "error");
+        } finally {
+          // Reset button state
+          deleteText.classList.remove("hidden");
+          deleteLoading.classList.add("hidden");
+          this.disabled = false;
+        }
+      };
+    });
+  });
 });

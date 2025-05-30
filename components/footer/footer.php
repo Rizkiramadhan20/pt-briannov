@@ -2,7 +2,7 @@
 <footer class="bg-white py-12 border-t border-gray-200">
     <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
-            <h3 class="text-xl font-bold text-gray-900 mb-4">Kreasi Digital</h3>
+            <img src="/assets/logo.png" alt="Kreasi Digital Logo" class="h-10 mb-4">
             <p class="text-sm text-gray-600 mb-6">
                 Prebör domisaning. Kemkastrering. Fagt kaskade. Bist decissa. Stereodiktisk
                 vasyns att preteng. Mons byning fihör. Pore tolig. Epire kanesk. Monosa
@@ -61,6 +61,6 @@
         </div>
     </div>
     <div class="container mx-auto px-4 mt-8 text-center text-sm text-gray-600">
-        © 2022 Mangcoding. All rights reserved.
+        © 2025 Space Digitalia. All rights reserved.
     </div>
 </footer>

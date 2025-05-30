@@ -61,14 +61,13 @@ include '../header.php';
     </script>
 </head>
 
-<body class="bg-[#181A20]">
+<body class="bg-gray-50">
     <section class="ml-0 sm:ml-64 pt-16 sm:pt-20 px-4 sm:px-8 min-h-screen transition-all duration-200">
-        <div
-            class="p-6 rounded-xl bg-gradient-to-r from-[#1E2026] to-[#181A20] shadow-lg transition-shadow duration-200">
+        <div class="p-6 rounded-xl bg-white shadow-lg transition-shadow duration-200">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div class="space-y-2">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-white">Contact Messages</h2>
-                    <p class="text-gray-400 text-sm sm:text-base">View and manage contact form submissions</p>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Contact Messages</h2>
+                    <p class="text-gray-600 text-sm sm:text-base">View and manage contact form submissions</p>
                 </div>
             </div>
         </div>
@@ -77,46 +76,47 @@ include '../header.php';
         <div class="mt-6">
             <?php if (empty($contacts)): ?>
             <div class="flex flex-col items-center justify-center py-12 px-4">
-                <svg class="w-32 h-32 text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                <svg class="w-32 h-32 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                         d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
                     </path>
                 </svg>
-                <h3 class="text-xl font-semibold text-gray-400 mb-2">No Messages Found</h3>
+                <h3 class="text-xl font-semibold text-gray-600 mb-2">No Messages Found</h3>
                 <p class="text-gray-500 text-center">No contact form submissions yet.</p>
             </div>
             <?php else: ?>
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left text-gray-400">
-                    <thead class="text-xs uppercase bg-gray-700 text-gray-400">
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg md:overflow-visible">
+                <table class="w-full text-sm text-left text-gray-600">
+                    <thead class="text-xs uppercase bg-gray-50 text-gray-600">
                         <tr>
-                            <th scope="col" class="px-6 py-3">Name</th>
-                            <th scope="col" class="px-6 py-3">Email</th>
-                            <th scope="col" class="px-6 py-3">Subject</th>
-                            <th scope="col" class="px-6 py-3">Message</th>
-                            <th scope="col" class="px-6 py-3">Date</th>
-                            <th scope="col" class="px-6 py-3">Actions</th>
+                            <th scope="col" class="px-6 py-3 whitespace-nowrap md:whitespace-normal">Name</th>
+                            <th scope="col" class="px-6 py-3 whitespace-nowrap md:whitespace-normal">Email</th>
+                            <th scope="col" class="px-6 py-3 whitespace-nowrap md:whitespace-normal">Subject</th>
+                            <th scope="col" class="px-6 py-3 whitespace-nowrap md:whitespace-normal">Message</th>
+                            <th scope="col" class="px-6 py-3 whitespace-nowrap md:whitespace-normal">Date</th>
+                            <th scope="col" class="px-6 py-3 whitespace-nowrap md:whitespace-normal">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($contacts as $contact): ?>
-                        <tr class="border-b border-gray-700 hover:bg-gray-700">
-                            <td class="px-6 py-4"><?php echo htmlspecialchars($contact['name']); ?></td>
-                            <td class="px-6 py-4"><?php echo htmlspecialchars($contact['email']); ?></td>
-                            <td class="px-6 py-4"><?php echo htmlspecialchars($contact['subject']); ?></td>
-                            <td class="px-6 py-4">
-                                <div class="max-w-xs truncate">
-                                    <?php echo htmlspecialchars($contact['message']); ?>
-                                </div>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap md:whitespace-normal">
+                                <?php echo htmlspecialchars($contact['name']); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap md:whitespace-normal">
+                                <?php echo htmlspecialchars($contact['email']); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap md:whitespace-normal">
+                                <?php echo htmlspecialchars($contact['subject']); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap md:whitespace-normal">
+                                <?php echo htmlspecialchars($contact['message']); ?>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 whitespace-nowrap md:whitespace-normal">
                                 <?php echo date('d M Y H:i', strtotime($contact['created_at'])); ?>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 whitespace-nowrap md:whitespace-normal">
                                 <div class="flex items-center gap-2">
                                     <button type="button"
-                                        class="view-message text-blue-500 hover:text-blue-400 transition-colors duration-200"
+                                        class="view-message text-blue-600 hover:text-blue-700 transition-colors duration-200"
                                         data-id="<?php echo $contact['id']; ?>"
                                         data-name="<?php echo htmlspecialchars($contact['name']); ?>"
                                         data-email="<?php echo htmlspecialchars($contact['email']); ?>"
@@ -126,7 +126,13 @@ include '../header.php';
                                         <i class='bx bx-show text-xl'></i>
                                     </button>
                                     <button type="button"
-                                        class="delete-message text-red-500 hover:text-red-400 transition-colors duration-200"
+                                        class="reply-message text-green-600 hover:text-green-700 transition-colors duration-200"
+                                        data-id="<?php echo $contact['id']; ?>"
+                                        data-email="<?php echo htmlspecialchars($contact['email']); ?>">
+                                        <i class='bx bx-reply text-xl'></i>
+                                    </button>
+                                    <button type="button"
+                                        class="delete-message text-red-600 hover:text-red-700 transition-colors duration-200"
                                         data-id="<?php echo $contact['id']; ?>" data-modal-target="deleteMessageModal"
                                         data-modal-toggle="deleteMessageModal">
                                         <i class='bx bx-trash text-xl'></i>
@@ -144,15 +150,15 @@ include '../header.php';
                 <nav class="inline-flex -space-x-px text-sm">
                     <!-- Prev -->
                     <a href="?page=<?php echo max(1, $page-1); ?>"
-                        class="px-3 py-2 ml-0 leading-tight text-gray-400 bg-gray-700 border border-gray-600 rounded-l-lg hover:bg-gray-600 hover:text-white <?php if($page==1) echo 'opacity-50 pointer-events-none'; ?>">&laquo;
+                        class="px-3 py-2 ml-0 leading-tight text-gray-600 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 <?php if($page==1) echo 'opacity-50 pointer-events-none'; ?>">&laquo;
                         Prev</a>
                     <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                     <a href="?page=<?php echo $i; ?>"
-                        class="px-3 py-2 leading-tight border border-gray-600 <?php echo $i == $page ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-400 hover:bg-gray-600 hover:text-white'; ?>"><?php echo $i; ?></a>
+                        class="px-3 py-2 leading-tight border border-gray-300 <?php echo $i == $page ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'; ?>"><?php echo $i; ?></a>
                     <?php endfor; ?>
                     <!-- Next -->
                     <a href="?page=<?php echo min($total_pages, $page+1); ?>"
-                        class="px-3 py-2 leading-tight text-gray-400 bg-gray-700 border border-gray-600 rounded-r-lg hover:bg-gray-600 hover:text-white <?php if($page==$total_pages) echo 'opacity-50 pointer-events-none'; ?>">Next
+                        class="px-3 py-2 leading-tight text-gray-600 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 <?php if($page==$total_pages) echo 'opacity-50 pointer-events-none'; ?>">Next
                         &raquo;</a>
                 </nav>
             </div>
@@ -164,9 +170,9 @@ include '../header.php';
         <div id="viewMessageModal" tabindex="-1" aria-hidden="true"
             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-2xl max-h-full">
-                <div class="relative bg-[#181A20] rounded-lg shadow">
-                    <div class="flex items-start justify-between p-4 border-b rounded-t border-gray-600">
-                        <h3 class="text-xl font-semibold text-white">
+                <div class="relative bg-white rounded-lg shadow">
+                    <div class="flex items-start justify-between p-4 border-b rounded-t border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-900">
                             Message Details
                         </h3>
                         <button type="button"
@@ -182,20 +188,20 @@ include '../header.php';
                     <div class="p-6">
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium text-gray-400">Name</label>
-                                <p class="mt-1 text-white" id="view-name"></p>
+                                <label class="block text-sm font-medium text-gray-600">Name</label>
+                                <p class="mt-1 text-gray-900" id="view-name"></p>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-400">Email</label>
-                                <p class="mt-1 text-white" id="view-email"></p>
+                                <label class="block text-sm font-medium text-gray-600">Email</label>
+                                <p class="mt-1 text-gray-900" id="view-email"></p>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-400">Subject</label>
-                                <p class="mt-1 text-white" id="view-subject"></p>
+                                <label class="block text-sm font-medium text-gray-600">Subject</label>
+                                <p class="mt-1 text-gray-900" id="view-subject"></p>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-400">Message</label>
-                                <p class="mt-1 text-white whitespace-pre-wrap" id="view-message"></p>
+                                <label class="block text-sm font-medium text-gray-600">Message</label>
+                                <p class="mt-1 text-gray-900 whitespace-pre-wrap" id="view-message"></p>
                             </div>
                         </div>
                     </div>
@@ -207,9 +213,9 @@ include '../header.php';
         <div id="deleteMessageModal" tabindex="-1" aria-hidden="true"
             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-md max-h-full">
-                <div class="relative bg-[#181A20] rounded-lg shadow">
-                    <div class="flex items-start justify-between p-4 border-b rounded-t border-gray-600">
-                        <h3 class="text-xl font-semibold text-white">
+                <div class="relative bg-white rounded-lg shadow">
+                    <div class="flex items-start justify-between p-4 border-b rounded-t border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-900">
                             Delete Message
                         </h3>
                         <button type="button"
@@ -223,14 +229,14 @@ include '../header.php';
                         </button>
                     </div>
                     <div class="p-6">
-                        <p class="text-gray-300 mb-4">Are you sure you want to delete this message? This action cannot
+                        <p class="text-gray-600 mb-4">Are you sure you want to delete this message? This action cannot
                             be
                             undone.</p>
                         <div class="flex items-center justify-end space-x-2">
                             <button type="button" data-modal-hide="deleteMessageModal"
-                                class="text-gray-300 bg-gray-700 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cancel</button>
+                                class="text-gray-600 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cancel</button>
                             <button type="button" id="confirmDelete"
-                                class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                 <span class="delete-text">Delete</span>
                                 <span class="delete-loading hidden">
                                     <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
@@ -252,15 +258,14 @@ include '../header.php';
 
     <!-- Toast Notification -->
     <div id="toast" class="fixed top-4 right-4 z-50 hidden">
-        <div class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
-            role="alert">
+        <div class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow" role="alert">
             <div id="toast-icon"
-                class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+                class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg">
                 <i class='bx bx-check text-xl'></i>
             </div>
             <div class="ml-3 text-sm font-normal" id="toast-message"></div>
             <button type="button"
-                class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8"
                 onclick="hideToast()">
                 <i class='bx bx-x text-xl'></i>
             </button>

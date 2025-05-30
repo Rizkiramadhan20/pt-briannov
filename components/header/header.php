@@ -2,34 +2,62 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+// Get current page and hash
+$current_page = basename($_SERVER['PHP_SELF']);
+$current_hash = isset($_SERVER['REQUEST_URI']) ? parse_url($_SERVER['REQUEST_URI'], PHP_URL_FRAGMENT) : '';
+
+// Function to check if link is active
+function isActive($page, $hash = '') {
+    global $current_page, $current_hash;
+    
+    if ($page === 'index.php' && empty($hash)) {
+        return $current_page === 'index.php' && empty($current_hash);
+    }
+    
+    return $current_hash === $hash;
+}
 ?>
 <!-- Fixed Header -->
-<header class="fixed-header py-4 w-full bg-white shadow-sm" x-data="{ mobileMenuOpen: false, userDropdownOpen: false }">
+<header class="fixed-header py-4 w-full bg-white shadow-sm transition-all duration-300" x-data="{ 
+        mobileMenuOpen: false, 
+        userDropdownOpen: false,
+        isScrolled: false
+    }" x-init="window.addEventListener('scroll', () => {
+        isScrolled = window.scrollY > 20;
+    })" :class="{
+        'py-2': isScrolled,
+        'py-4': !isScrolled,
+        'shadow-md': isScrolled,
+        'shadow-sm': !isScrolled
+    }" style="position: fixed; top: 0; left: 0; right: 0; z-index: 50;">
     <nav class="container mx-auto px-4 flex justify-between items-center">
-        <a href="/index.php" class="text-xl font-bold">Kreasi Digital</a>
+        <a href="/index.php" class="flex items-center">
+            <img src="/assets/logo.png" alt="Kreasi Digital Logo" class="h-10">
+        </a>
 
         <!-- Desktop Navigation -->
         <ul class="hidden md:flex items-center gap-6">
             <li>
                 <a href="/"
-                    class="px-3 py-2 text-gray-600 hover:text-blue-600 font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all">Home</a>
+                    class="px-3 py-2 <?php echo isActive('index.php') ? 'text-blue-600 after:w-full' : 'text-gray-600'; ?> hover:text-blue-600 font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all">Home</a>
             </li>
             <li>
                 <a href="#about"
-                    class="px-3 py-2 text-gray-600 hover:text-blue-600 font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all">About
+                    class="px-3 py-2 <?php echo isActive('index.php', 'about') ? 'text-blue-600 after:w-full' : 'text-gray-600'; ?> hover:text-blue-600 font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all">About
                     Us</a>
             </li>
             <li>
-                <a href="#"
-                    class="px-3 py-2 text-gray-600 hover:text-blue-600 font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all">Services</a>
+                <a href="#services"
+                    class="px-3 py-2 <?php echo isActive('index.php', 'services') ? 'text-blue-600 after:w-full' : 'text-gray-600'; ?> hover:text-blue-600 font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all">Services</a>
             </li>
             <li>
-                <a href="#"
-                    class="px-3 py-2 text-gray-600 hover:text-blue-600 font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all">Portofolio</a>
+                <a href="#projects"
+                    class="px-3 py-2 <?php echo isActive('index.php', 'projects') ? 'text-blue-600 after:w-full' : 'text-gray-600'; ?> hover:text-blue-600 font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all">Projects</a>
             </li>
             <li>
-                <a href="#"
-                    class="px-3 py-2 text-gray-600 hover:text-blue-600 font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all">Pricing</a>
+                <a href="#contact"
+                    class="px-3 py-2 <?php echo isActive('index.php', 'contact') ? 'text-blue-600 after:w-full' : 'text-gray-600'; ?> hover:text-blue-600 font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all">Contact</a>
             </li>
         </ul>
 
@@ -65,37 +93,42 @@ if (session_status() === PHP_SESSION_NONE) {
                     <ul class="space-y-4">
                         <li>
                             <a href="/"
-                                class="flex items-center gap-4 px-4 py-4 text-gray-700 hover:bg-gray-50 rounded-xl transition-colors">
-                                <span class="material-icons text-2xl text-gray-500">home</span>
+                                class="flex items-center gap-4 px-4 py-4 <?php echo isActive('index.php') ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50'; ?> rounded-xl transition-colors">
+                                <span
+                                    class="material-icons text-2xl <?php echo isActive('index.php') ? 'text-blue-600' : 'text-gray-500'; ?>">home</span>
                                 <span class="text-lg">Home</span>
                             </a>
                         </li>
                         <li>
                             <a href="#about"
-                                class="flex items-center gap-4 px-4 py-4 text-gray-700 hover:bg-gray-50 rounded-xl transition-colors">
-                                <span class="material-icons text-2xl text-gray-500">info</span>
+                                class="flex items-center gap-4 px-4 py-4 <?php echo isActive('index.php', 'about') ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50'; ?> rounded-xl transition-colors">
+                                <span
+                                    class="material-icons text-2xl <?php echo isActive('index.php', 'about') ? 'text-blue-600' : 'text-gray-500'; ?>">info</span>
                                 <span class="text-lg">About</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#"
-                                class="flex items-center gap-4 px-4 py-4 text-gray-700 hover:bg-gray-50 rounded-xl transition-colors">
-                                <span class="material-icons text-2xl text-gray-500">miscellaneous_services</span>
+                            <a href="#services"
+                                class="flex items-center gap-4 px-4 py-4 <?php echo isActive('index.php', 'services') ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50'; ?> rounded-xl transition-colors">
+                                <span
+                                    class="material-icons text-2xl <?php echo isActive('index.php', 'services') ? 'text-blue-600' : 'text-gray-500'; ?>">miscellaneous_services</span>
                                 <span class="text-lg">Services</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#"
-                                class="flex items-center gap-4 px-4 py-4 text-gray-700 hover:bg-gray-50 rounded-xl transition-colors">
-                                <span class="material-icons text-2xl text-gray-500">work</span>
-                                <span class="text-lg">Portfolio</span>
+                            <a href="#projects"
+                                class="flex items-center gap-4 px-4 py-4 <?php echo isActive('index.php', 'projects') ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50'; ?> rounded-xl transition-colors">
+                                <span
+                                    class="material-icons text-2xl <?php echo isActive('index.php', 'projects') ? 'text-blue-600' : 'text-gray-500'; ?>">work</span>
+                                <span class="text-lg">Projects</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#"
-                                class="flex items-center gap-4 px-4 py-4 text-gray-700 hover:bg-gray-50 rounded-xl transition-colors">
-                                <span class="material-icons text-2xl text-gray-500">payments</span>
-                                <span class="text-lg">Pricing</span>
+                            <a href="#contact"
+                                class="flex items-center gap-4 px-4 py-4 <?php echo isActive('index.php', 'contact') ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50'; ?> rounded-xl transition-colors">
+                                <span
+                                    class="material-icons text-2xl <?php echo isActive('index.php', 'contact') ? 'text-blue-600' : 'text-gray-500'; ?>">payments</span>
+                                <span class="text-lg">Contact</span>
                             </a>
                         </li>
                     </ul>
@@ -168,7 +201,7 @@ if (session_status() === PHP_SESSION_NONE) {
             </div>
             <?php else: ?>
             <a href="/login.php"
-                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">Let's Talk</a>
+                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">Login</a>
             <?php endif; ?>
         </div>
 
@@ -183,3 +216,4 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script src="/js/header.js"></script>

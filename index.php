@@ -89,8 +89,12 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
     <meta charset="UTF-8" />
     <title>Kreasi Digital</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="assets/logo.png">
     <link rel="stylesheet" href="style/style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
     tailwind.config = {
         theme: {
@@ -112,7 +116,8 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
     <!-- Main Content -->
     <main class="overflow-hidden">
         <!-- Home -->
-        <section class="py-8 sm:py-16 bg-gray-50 min-h-screen flex items-center justify-center">
+        <section
+            class="py-8 sm:py-16 bg-gray-50 min-h-screen flex items-center justify-center mt-0 sm:mt-10 overflow-hidden">
             <div class="container px-4 text-center flex flex-col gap-4">
                 <?php if (!empty($contents)):
                 // Get the first item from the fetched data to use for the hero section
@@ -122,16 +127,18 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
                 <p class="text-sm text-gray-600 mb-2">Designing With Us</p>
 
                 <h1
-                    class="mx-auto text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-3xl font-bold text-gray-900 leading-tight mb-4 px-4">
+                    class="mx-auto text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-3xl font-bold text-gray-900 leading-tight mb-4 px-4 home-title">
                     <?php echo htmlspecialchars($hero_content['title']); ?>
                 </h1>
 
-                <p class="text-sm sm:text-base lg:text-lg text-gray-700 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
+                <p
+                    class="text-sm sm:text-base lg:text-lg text-gray-700 mb-6 sm:mb-8 max-w-2xl mx-auto px-4 home-description">
                     <?php echo htmlspecialchars($hero_content['description']); ?>
                 </p>
 
                 <!-- Services/Skills List -->
-                <ul class="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-10 text-gray-600 mb-8 sm:mb-12 px-4">
+                <ul
+                    class="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-10 text-gray-600 mb-8 sm:mb-12 px-4 home-framework">
                     <?php foreach ($hero_content['framework'] as $framework): ?>
                     <li class="text-xs sm:text-sm md:text-base">• <?php echo htmlspecialchars($framework); ?></li>
                     <?php endforeach; ?>
@@ -139,13 +146,13 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
 
                 <!-- Call to Action Button -->
                 <a href="<?php echo htmlspecialchars($hero_content['href']); ?>" target="_blank"
-                    class="inline-block px-5 sm:px-6 md:px-8 w-fit mx-auto py-2.5 sm:py-3 bg-blue-600 text-white font-semibold text-sm sm:text-base md:text-lg rounded-full shadow-lg hover:bg-blue-700 transition duration-300">
+                    class="inline-block px-5 sm:px-6 md:px-8 w-fit mx-auto py-2.5 sm:py-3 bg-blue-600 text-white font-semibold text-sm sm:text-base md:text-lg rounded-full shadow-lg hover:bg-blue-700 transition duration-300 home-cta opacity-0 translate-y-12 scale-90">
                     <span><?php echo htmlspecialchars($hero_content['labels']); ?></span>
                 </a>
 
                 <!-- Social Icons Placeholder -->
                 <div
-                    class="flex justify-center gap-3 sm:gap-4 md:gap-6 mt-6 sm:mt-8 md:mt-12 text-gray-600 text-lg sm:text-xl md:text-2xl">
+                    class="flex justify-center gap-3 sm:gap-4 md:gap-6 mt-6 sm:mt-8 md:mt-12 text-gray-600 text-lg sm:text-xl md:text-2xl social-icons">
                     <a href="#" class="hover:text-blue-600 transition-colors duration-200"><i
                             class='bx bxl-behance'></i></a>
                     <a href="#" class="hover:text-blue-600 transition-colors duration-200"><i
@@ -155,11 +162,11 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
                 </div>
 
                 <!-- Weekly Growth and Client Trusted Placeholders -->
-                <div class="hidden md:block absolute top-1/4 left-4 lg:left-10">
+                <div class="hidden md:block absolute top-1/4 left-4 lg:left-10 home-growth">
                     <img src="/assets/home/grow.png" alt="" class="w-24 lg:w-auto">
                 </div>
 
-                <div class="hidden md:block absolute top-1/4 right-4 lg:right-10">
+                <div class="hidden md:block absolute top-1/4 right-4 lg:right-10 home-trusted">
                     <img src="/assets/home/trused.png" alt="" class="w-24 lg:w-auto">
                 </div>
 
@@ -177,7 +184,8 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
                     <?php if (!empty($partners)): ?>
                     <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-16">
                         <?php foreach ($partners as $partner): ?>
-                        <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 flex items-center justify-center">
+                        <div
+                            class="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 flex items-center justify-center partner-logo">
                             <img src="dashboard/<?php echo htmlspecialchars($partner['image']); ?>" alt="Partner Logo"
                                 class="max-w-full max-h-full object-contain">
                         </div>
@@ -193,21 +201,21 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
         </section>
 
         <!-- About -->
-        <section class="py-10 bg-white">
+        <section class="py-10 bg-white" id="about">
             <div class="container px-4">
                 <?php if ($about_content):
                 ?>
 
                 <div class="flex flex-col md:flex-row justify-evenly overflow-hidden">
                     <!-- Left Side - Image -->
-                    <div class="relative">
+                    <div class="relative about-image">
                         <img src="dashboard/<?php echo htmlspecialchars($about_content['image']); ?>"
                             alt="About Us Image" class="w-full h-full object-cover lg:rounded-l-xl">
                     </div>
 
                     <!-- Right Side - Content -->
                     <div
-                        class="flex p-4 sm:p-6 md:p-8 flex-col md:flex-row items-start md:items-center justify-center bg-gray-100 gap-6 md:gap-4 rounded rounded-md">
+                        class="flex p-4 sm:p-6 md:p-8 flex-col md:flex-row items-start md:items-center justify-center bg-gray-100 gap-6 md:gap-4 rounded rounded-md about-content">
                         <div class="flex flex-col gap-4">
                             <h3 class="text-2xl md:text-3xl font-bold text-gray-900">
                                 <?php echo htmlspecialchars($about_content['title']); ?>
@@ -219,10 +227,10 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
                         </div>
 
                         <?php if (!empty($about_content['metrics'])): ?>
-                        <div class="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-8">
+                        <div class="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-8 about-metrics">
                             <div class="flex flex-wrap md:flex-nowrap gap-6 md:gap-8">
                                 <?php foreach ($about_content['metrics'] as $index => $metric): ?>
-                                <div class="flex flex-col items-start">
+                                <div class="flex flex-col items-start about-metric">
                                     <h4 class="text-3xl md:text-4xl font-bold text-blue-600 mb-0">
                                         <?php echo htmlspecialchars($metric['count']); ?>
                                     </h4>
@@ -254,7 +262,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
         </section>
 
         <!-- Timeline -->
-        <section class="py-10 bg-white">
+        <section class="py-10 bg-white" id="services">
             <div class="container px-4 flex flex-col gap-10 md:gap-14">
                 <?php if (!empty($timelines)): ?>
                 <!-- Status Filter -->
@@ -321,28 +329,29 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
                     <?php foreach ($works as $work): ?>
                     <!-- Image -->
-                    <div class="relative aspect-[4/3] w-full max-w-[700px] mx-auto order-2 lg:order-1">
+                    <div class="relative aspect-[4/3] w-full max-w-[700px] mx-auto order-2 lg:order-1 work-image">
                         <img src="dashboard/<?php echo htmlspecialchars($work['image']); ?>"
                             alt="<?php echo htmlspecialchars($work['title']); ?>"
                             class="absolute inset-0 w-full h-full object-cover">
                     </div>
 
                     <!-- Content -->
-                    <div class="max-w-lg mx-auto lg:mx-0 flex flex-col justify-center gap-4 order-1 lg:order-2">
-                        <p class="text-gray-500 text-sm sm:text-base mb-2">
+                    <div
+                        class="max-w-lg mx-auto lg:mx-0 flex flex-col justify-center gap-4 order-1 lg:order-2 work-content">
+                        <p class="text-gray-500 text-sm sm:text-base mb-2 work-text">
                             <?php echo htmlspecialchars($work['text']); ?>
                         </p>
 
-                        <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                        <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 work-title">
                             <?php echo htmlspecialchars($work['title']); ?>
                         </h3>
 
-                        <p class="text-gray-500 text-sm sm:text-base mb-6">
+                        <p class="text-gray-500 text-sm sm:text-base mb-6 work-description">
                             <?php echo htmlspecialchars($work['description']); ?>
                         </p>
 
                         <a href="#"
-                            class="inline-block px-6 sm:px-8 py-2.5 sm:py-3 bg-blue-600 text-white font-semibold rounded-full shadow-lg hover:bg-blue-700 transition duration-300 w-fit text-sm sm:text-base">
+                            class="inline-block px-6 sm:px-8 py-2.5 sm:py-3 bg-blue-600 text-white font-semibold rounded-full shadow-lg hover:bg-blue-700 transition duration-300 w-fit text-sm sm:text-base work-cta">
                             Let's Work
                         </a>
                     </div>
@@ -358,7 +367,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
         </section>
 
         <!-- Projects -->
-        <section class="py-8 sm:py-12 md:py-16 bg-white">
+        <section class="py-8 sm:py-12 md:py-16 bg-white" id="projects">
             <div class="container px-4">
                 <div class="flex flex-col gap-3 sm:gap-4 items-center justify-center text-center max-w-2xl mx-auto">
                     <span class="text-gray-500 text-sm sm:text-base">Projects</span>
@@ -370,7 +379,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mt-8 sm:mt-12 md:mt-20">
                     <!-- Card Besar Kiri -->
                     <?php if (isset($projects[0])): ?>
-                    <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden min-h-[300px] sm:min-h-[400px] md:min-h-[480px] flex items-end shadow-lg"
+                    <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden min-h-[300px] sm:min-h-[400px] md:min-h-[480px] flex items-end shadow-lg project-card"
                         style="background-image: url('dashboard/<?php echo htmlspecialchars($projects[0]['image']); ?>'); background-size: cover; background-position: center;">
                         <div class="bg-gradient-to-t from-black/80 to-transparent p-4 sm:p-6 md:p-8 w-full">
                             <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
@@ -387,7 +396,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
                     <!-- Dua Card Kecil Kanan -->
                     <div class="flex flex-col gap-4 sm:gap-6 md:gap-8">
                         <?php foreach (array_slice($projects, 1, 2) as $project): ?>
-                        <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden min-h-[200px] sm:min-h-[240px] md:min-h-[280px] flex items-end shadow-lg"
+                        <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden min-h-[200px] sm:min-h-[240px] md:min-h-[280px] flex items-end shadow-lg project-card"
                             style="background-image: url('dashboard/<?php echo htmlspecialchars($project['image']); ?>'); background-size: cover; background-position: center;">
                             <div class="bg-gradient-to-t from-black/80 to-transparent p-4 sm:p-6 w-full">
                                 <h3 class="text-lg sm:text-xl font-bold text-white mb-1">
@@ -409,9 +418,10 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
         <section class="py-12 bg-white relative min-h-full sm:min-h-screen">
             <div class="container px-4">
                 <div class="mb-10">
-                    <span class="text-sm text-gray-400">Inspiration</span>
-                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-2">UI Design Exploration</h1>
-                    <p class="text-gray-400 text-base sm:text-lg max-w-2xl">
+                    <span class="text-sm text-gray-400 inspiration-subtitle">Inspiration</span>
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-2 inspiration-title">UI
+                        Design Exploration</h1>
+                    <p class="text-gray-400 text-base sm:text-lg max-w-2xl inspiration-description">
                         Explore a sea of wit that is impossible to resist. Get inspired by the best UI design
                         collections.
                     </p>
@@ -423,7 +433,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
                     <div class="flex gap-4" style="min-width: max-content;">
                         <?php foreach ($inspirations as $inspiration): ?>
                         <div
-                            class="relative group overflow-hidden rounded-xl shadow-lg w-[240px] aspect-[4/3] flex-shrink-0">
+                            class="relative group overflow-hidden rounded-xl shadow-lg w-[240px] aspect-[4/3] flex-shrink-0 inspiration-card">
                             <img src="dashboard/<?php echo htmlspecialchars($inspiration['image']); ?>"
                                 alt="Inspiration"
                                 class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 group-hover:brightness-75" />
@@ -446,7 +456,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
                             $firstRow = array_slice($inspirations, 0, 5);
                             foreach ($firstRow as $inspiration): 
                             ?>
-                            <div class="relative group overflow-hidden rounded-xl shadow-lg">
+                            <div class="relative group overflow-hidden rounded-xl shadow-lg inspiration-card">
                                 <img src="dashboard/<?php echo htmlspecialchars($inspiration['image']); ?>"
                                     alt="Inspiration"
                                     class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110 group-hover:brightness-75" />
@@ -467,7 +477,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
                             $secondRow = array_slice($inspirations, 5, 5);
                             foreach ($secondRow as $inspiration): 
                             ?>
-                            <div class="relative group overflow-hidden rounded-xl shadow-lg">
+                            <div class="relative group overflow-hidden rounded-xl shadow-lg inspiration-card">
                                 <img src="dashboard/<?php echo htmlspecialchars($inspiration['image']); ?>"
                                     alt="Inspiration"
                                     class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110 group-hover:brightness-75" />
@@ -495,10 +505,12 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
             <div class="container px-4">
                 <div
                     class="flex flex-col gap-2 sm:gap-3 md:gap-4 items-center justify-center text-center max-w-2xl mx-auto">
-                    <span class="text-gray-500 text-xs sm:text-sm md:text-base">Testimonial</span>
-                    <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900">What our customer
+                    <span class="text-gray-500 text-xs sm:text-sm md:text-base testimonials-subtitle">Testimonial</span>
+                    <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 testimonials-title">
+                        What our customer
                         say</h2>
-                    <p class="text-gray-500 text-xs sm:text-sm md:text-base">Lörem ipsum astrobel sar direlig. Kronde
+                    <p class="text-gray-500 text-xs sm:text-sm md:text-base testimonials-description">Lörem ipsum
+                        astrobel sar direlig. Kronde
                         est</p>
                 </div>
 
@@ -566,7 +578,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
         </section>
 
         <!-- Contact -->
-        <section class="py-10 bg-gradient-to-b from-white to-gray-50">
+        <section class="py-10 bg-gradient-to-b from-white to-gray-50" id="contact">
             <div class="container px-4">
                 <div class="flex flex-col items-center justify-center">
                     <div class="mb-6">
@@ -582,7 +594,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
 
                     <div class="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <!-- Contact Info -->
-                        <div class="bg-white rounded-2xl shadow-lg p-8 lg:p-12 flex flex-col gap-8">
+                        <div class="bg-white rounded-2xl shadow-lg p-8 lg:p-12 flex flex-col gap-8 contact-info">
                             <div class="flex flex-col gap-6">
                                 <h2 class="text-2xl font-bold text-gray-900">Get in Touch</h2>
                                 <p class="text-gray-600">We'd love to hear from you. Please fill out this form or shoot
@@ -648,7 +660,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
                         </div>
 
                         <!-- Contact Form -->
-                        <div class="bg-white rounded-2xl shadow-lg p-8 lg:p-20">
+                        <div class="bg-white rounded-2xl shadow-lg p-8 lg:p-20 contact-form">
                             <?php if (isset($_SESSION['success'])): ?>
                             <div class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
                                 <?php 
@@ -747,6 +759,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
     <!-- Main Js -->
     <script src="js/main.js"></script>
     <script src="js/toast.js"></script>
+    <script src="js/animations.js"></script>
     <?php if (isset($_SESSION['toast'])): ?>
     <script>
     showToast("<?php echo $_SESSION['toast']['message']; ?>", "<?php echo $_SESSION['toast']['type']; ?>");

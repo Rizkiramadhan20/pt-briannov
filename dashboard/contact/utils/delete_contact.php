@@ -6,26 +6,35 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
     exit;
 }
 
-require_once '../../config/db.php';
+require_once '../../../config/db.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
-    $id = intval($_POST['id']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get JSON data
+    $json = file_get_contents('php://input');
+    $data = json_decode($json, true);
     
-    try {
-        $stmt = $db->prepare("DELETE FROM contacts WHERE id = ?");
-        $stmt->bind_param("i", $id);
+    if (isset($data['id'])) {
+        $id = intval($data['id']);
         
-        if ($stmt->execute()) {
+        try {
+            $stmt = $db->prepare("DELETE FROM contacts WHERE id = ?");
+            $stmt->bind_param("i", $id);
+            
+            if ($stmt->execute()) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true, 'message' => 'Message deleted successfully']);
+            } else {
+                throw new Exception("Failed to delete message");
+            }
+        } catch (Exception $e) {
             header('Content-Type: application/json');
-            echo json_encode(['success' => true, 'message' => 'Message deleted successfully']);
-        } else {
-            throw new Exception("Failed to delete message");
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
-    } catch (Exception $e) {
+    } else {
         header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        echo json_encode(['success' => false, 'message' => 'ID is required']);
     }
 } else {
     header('Content-Type: application/json');
-    echo json_encode(['success' => false, 'message' => 'Invalid request']);
+    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 } 

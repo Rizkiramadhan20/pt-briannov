@@ -33,12 +33,22 @@
                     <span class="ml-3">Dashboard</span>
                 </a>
             </li>
+
             <li>
                 <a href="/dashboard/home/home.php"
                     class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group transition-all duration-200 <?= strpos($_SERVER['PHP_SELF'], 'home.php') !== false ? 'bg-blue-50 text-blue-600' : '' ?>">
                     <span
                         class="material-icons <?= strpos($_SERVER['PHP_SELF'], 'home.php') !== false ? 'text-blue-600' : 'text-gray-600' ?> group-hover:text-gray-900 transition-colors duration-200">house</span>
                     <span class="ml-3">Home</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="/dashboard/about/about.php"
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group transition-all duration-200 <?= strpos($_SERVER['PHP_SELF'], 'about.php') !== false ? 'bg-blue-50 text-blue-600' : '' ?>">
+                    <span
+                        class="material-icons <?= strpos($_SERVER['PHP_SELF'], 'about.php') !== false ? 'text-blue-600' : 'text-gray-600' ?> group-hover:text-gray-900 transition-colors duration-200">info</span>
+                    <span class="ml-3">About</span>
                 </a>
             </li>
 

@@ -389,14 +389,8 @@ document
       return { count: parseInt(count), title: title };
     });
 
-    // Validate metrics before sending
-    if (metrics.length === 0) {
-      showToast("Please add at least one metric", false);
-      return;
-    }
-
     // Add metrics to form data as JSON string
-    formData.append("metrics", JSON.stringify(metrics));
+    formData.append("metrics", JSON.stringify(metrics || []));
 
     // Only append image if a new one is selected
     const imageInput = document.getElementById("edit_image");

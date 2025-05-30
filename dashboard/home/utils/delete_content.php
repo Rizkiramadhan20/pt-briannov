@@ -25,14 +25,8 @@ if (!isset($data['id'])) {
 }
 
 // Database connection
-$db = new mysqli('localhost', 'root', '', 'compon');
-if ($db->connect_error) {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Database connection failed: ' . $db->connect_error
-    ]);
-    exit;
-}
+require_once '../../../config/db.php';
+$db = getDBConnection();
 
 // Prepare and execute delete query
 $stmt = $db->prepare("DELETE FROM home WHERE id = ?");

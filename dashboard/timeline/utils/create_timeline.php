@@ -41,13 +41,8 @@ $target_path = $upload_dir . $filename;
 // Move uploaded file
 if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
     // Database connection
-    $db = new mysqli('localhost', 'root', '', 'compon');
-
-    if ($db->connect_error) {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'message' => 'Database connection failed']);
-        exit;
-    }
+    require_once '../../../config/db.php';
+    $db = getDBConnection();
 
     // Prepare and execute the query
     $stmt = $db->prepare("INSERT INTO timeline (title, description, text, image, status) VALUES (?, ?, ?, ?, ?)");

@@ -18,13 +18,8 @@ if (!isset($data['id']) || !isset($data['title']) || !isset($data['description']
 }
 
 // Database connection
-$db = new mysqli('localhost', 'root', '', 'compon');
-
-if ($db->connect_error) {
-    header('Content-Type: application/json');
-    echo json_encode(['success' => false, 'message' => 'Database connection failed']);
-    exit;
-}
+require_once '../../../config/db.php';
+$db = getDBConnection();
 
 // Prepare and execute the query
 $stmt = $db->prepare("UPDATE home SET title = ?, text = ?, description = ?, framework = ?, labels = ?, href = ? WHERE id = ?");

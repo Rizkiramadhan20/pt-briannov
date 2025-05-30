@@ -11,19 +11,25 @@ function validateRegister() {
 // Timeline filtering functionality
 function filterTimeline(status) {
   // Update label styles
-  document.querySelectorAll(".filter-btn").forEach((btn) => {
-    if (btn.dataset.status === status) {
-      btn.classList.remove("bg-gray-100", "text-gray-600");
-      btn.classList.add("bg-blue-600", "text-white");
-    } else {
-      btn.classList.remove("bg-blue-600", "text-white");
-      btn.classList.add("bg-gray-100", "text-gray-600");
-    }
-  });
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  if (filterButtons.length > 0) {
+    filterButtons.forEach((btn) => {
+      if (btn.dataset.status === status) {
+        btn.classList.remove("bg-gray-100", "text-gray-600");
+        btn.classList.add("bg-blue-600", "text-white");
+      } else {
+        btn.classList.remove("bg-blue-600", "text-white");
+        btn.classList.add("bg-gray-100", "text-gray-600");
+      }
+    });
+  }
 
   // Filter timeline items
   const timelineItems = document.querySelectorAll(".timeline-item");
   const container = document.getElementById("timeline-container");
+
+  if (!container || timelineItems.length === 0) return;
+
   let hasVisibleItems = false;
 
   timelineItems.forEach((item) => {
@@ -43,9 +49,9 @@ function filterTimeline(status) {
       noResultsMsg.id = "no-results-message";
       noResultsMsg.className = "text-center py-12";
       noResultsMsg.innerHTML = `
-                <h3 class="text-xl font-semibold text-gray-600 mb-4">No timelines found for selected status</h3>
-                <p class="text-gray-500">Please select a different status.</p>
-            `;
+        <h3 class="text-xl font-semibold text-gray-600 mb-4">No timelines found for selected status</h3>
+        <p class="text-gray-500">Please select a different status.</p>
+      `;
       container.appendChild(noResultsMsg);
     }
   } else if (noResultsMsg) {
@@ -55,14 +61,6 @@ function filterTimeline(status) {
 
 // Sidebar functionality
 document.addEventListener("DOMContentLoaded", function () {
-  // Initialize timeline filter
-  const firstStatus = document.querySelector(
-    'input[name="status-filter"]:checked'
-  )?.dataset.status;
-  if (firstStatus) {
-    filterTimeline(firstStatus);
-  }
-
   const sidebar = document.getElementById("sidebar-mobile");
   const backdrop = document.getElementById("sidebar-mobile-backdrop");
   const toggleButtons = document.querySelectorAll(
@@ -72,6 +70,14 @@ document.addEventListener("DOMContentLoaded", function () {
     '[data-drawer-hide="sidebar-mobile"]'
   );
   const navLinks = document.querySelectorAll('a[href^="/"]');
+
+  // Initialize timeline filter
+  const firstStatus = document.querySelector(
+    'input[name="status-filter"]:checked'
+  )?.dataset.status;
+  if (firstStatus) {
+    filterTimeline(firstStatus);
+  }
 
   // Add page transition effect
   function addPageTransition() {
@@ -96,6 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Toggle sidebar
   function toggleSidebar() {
+    if (!sidebar || !backdrop) return;
     sidebar.classList.toggle("-translate-x-full");
     backdrop.classList.toggle("hidden");
     document.body.classList.toggle("overflow-hidden");
@@ -103,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Hide sidebar
   function hideSidebar() {
+    if (!sidebar || !backdrop) return;
     if (!sidebar.classList.contains("-translate-x-full")) {
       sidebar.classList.add("-translate-x-full");
       backdrop.classList.add("hidden");
@@ -114,20 +122,18 @@ document.addEventListener("DOMContentLoaded", function () {
   toggleButtons.forEach((button) =>
     button.addEventListener("click", toggleSidebar)
   );
-
   hideButtons.forEach((button) =>
     button.addEventListener("click", hideSidebar)
   );
 
   // Handle window resize
   window.addEventListener("resize", function () {
+    if (!sidebar || !backdrop) return;
     if (window.innerWidth >= 640) {
-      // sm breakpoint
       sidebar.classList.remove("-translate-x-full");
       backdrop.classList.add("hidden");
       document.body.classList.remove("overflow-hidden");
     } else {
-      // Mobile view
       sidebar.classList.add("-translate-x-full");
       backdrop.classList.add("hidden");
       document.body.classList.remove("overflow-hidden");

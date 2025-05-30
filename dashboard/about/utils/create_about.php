@@ -63,7 +63,8 @@ $target_path = $upload_dir . $filename;
 // Move uploaded file
 if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
     // Database connection
-    $db = new mysqli('localhost', 'root', '', 'compon');
+    require_once '../../../config/db.php';
+    $db = getDBConnection();
 
     if ($db->connect_error) {
         header('Content-Type: application/json');

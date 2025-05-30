@@ -1,412 +1,248 @@
+// Initialize ScrollReveal only if not already initialized
+if (typeof window.sr === "undefined") {
+  window.sr = ScrollReveal({
+    origin: "bottom",
+    distance: "60px",
+    duration: 1000,
+    delay: 200,
+    easing: "cubic-bezier(0.5, 0, 0, 1)",
+    reset: false,
+  });
+}
+
+// Initialize animations state
+window.isAnimationsInitialized = window.isAnimationsInitialized || false;
+
 // Home section animations
-const homeAnimations = () => {
-  gsap.from(".home-title", {
-    y: 100,
-    opacity: 0,
-    duration: 1,
-    ease: "power4.out",
-  });
+function initHomeAnimations() {
+  if (window.isAnimationsInitialized) return;
 
-  gsap.from(".home-description", {
-    y: 50,
-    opacity: 0,
-    duration: 1,
-    delay: 0.3,
-    ease: "power4.out",
-  });
+  const elements = {
+    title: document.querySelector(".home-title"),
+    description: document.querySelector(".home-description"),
+    framework: document.querySelectorAll(".home-framework li"),
+    cta: document.querySelector(".home-cta"),
+    socialIcons: document.querySelectorAll(".social-icons a"),
+    partnerLogos: document.querySelectorAll(".partner-logo"),
+    growth: document.querySelector(".home-growth"),
+    trusted: document.querySelector(".home-trusted"),
+  };
 
-  gsap.from(".home-framework li", {
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    stagger: 0.1,
-    delay: 0.5,
-    ease: "power3.out",
-  });
-
-  gsap.to(".home-cta", {
-    y: 0,
-    scale: 1,
-    opacity: 1,
-    duration: 0.8,
-    delay: 0.8,
-    ease: "elastic.out(1, 0.5)",
-  });
-
-  gsap.from(".social-icons a", {
-    y: 20,
-    opacity: 0,
-    duration: 0.6,
-    stagger: 0.1,
-    delay: 1,
-    ease: "power2.out",
-  });
-
-  gsap.from(".partner-logo", {
-    scale: 0.8,
-    opacity: 0,
-    duration: 0.8,
-    stagger: 0.1,
-    delay: 1.2,
-    ease: "power2.out",
-  });
-
-  // Weekly Growth animation
-  gsap.from(".home-growth", {
-    scale: 0.5,
-    opacity: 0,
-    duration: 1,
-    delay: 0.5,
-    ease: "back.out(1.7)",
-  });
-
-  // Client Trusted animation
-  gsap.from(".home-trusted", {
-    scale: 0.5,
-    opacity: 0,
-    duration: 1,
-    delay: 0.5,
-    ease: "back.out(1.7)",
-  });
-};
+  if (elements.title)
+    window.sr.reveal(elements.title, { delay: 0, distance: "100px" });
+  if (elements.description)
+    window.sr.reveal(elements.description, { delay: 200, distance: "50px" });
+  if (elements.framework.length)
+    window.sr.reveal(elements.framework, {
+      delay: 400,
+      interval: 100,
+      distance: "30px",
+    });
+  if (elements.cta)
+    window.sr.reveal(elements.cta, { delay: 600, distance: "30px" });
+  if (elements.socialIcons.length)
+    window.sr.reveal(elements.socialIcons, {
+      delay: 800,
+      interval: 100,
+      distance: "20px",
+    });
+  if (elements.partnerLogos.length)
+    window.sr.reveal(elements.partnerLogos, {
+      delay: 1000,
+      interval: 100,
+      distance: "30px",
+    });
+  if (elements.growth)
+    window.sr.reveal(elements.growth, {
+      delay: 500,
+      scale: 0.5,
+      origin: "left",
+    });
+  if (elements.trusted)
+    window.sr.reveal(elements.trusted, {
+      delay: 500,
+      scale: 0.5,
+      origin: "right",
+    });
+}
 
 // Works section animations
-const worksAnimations = () => {
-  gsap.from(".work-image", {
-    x: -100,
-    opacity: 0,
-    duration: 1,
-    scrollTrigger: {
-      trigger: ".work-image",
-      start: "top 80%",
-      end: "top 20%",
-      toggleActions: "play none none reverse",
-    },
-  });
+function initWorksAnimations() {
+  if (window.isAnimationsInitialized) return;
 
-  gsap.from(".work-text", {
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    delay: 0.2,
-    scrollTrigger: {
-      trigger: ".work-content",
-      start: "top 80%",
-      end: "top 20%",
-      toggleActions: "play none none reverse",
-    },
-  });
+  const elements = {
+    image: document.querySelector(".work-image"),
+    text: document.querySelector(".work-text"),
+    title: document.querySelector(".work-title"),
+    description: document.querySelector(".work-description"),
+    cta: document.querySelector(".work-cta"),
+  };
 
-  gsap.from(".work-title", {
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    delay: 0.4,
-    scrollTrigger: {
-      trigger: ".work-content",
-      start: "top 80%",
-      end: "top 20%",
-      toggleActions: "play none none reverse",
-    },
-  });
-
-  gsap.from(".work-description", {
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    delay: 0.6,
-    scrollTrigger: {
-      trigger: ".work-content",
-      start: "top 80%",
-      end: "top 20%",
-      toggleActions: "play none none reverse",
-    },
-  });
-
-  gsap.from(".work-cta", {
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    delay: 0.8,
-    scrollTrigger: {
-      trigger: ".work-content",
-      start: "top 80%",
-      end: "top 20%",
-      toggleActions: "play none none reverse",
-    },
-  });
-};
+  if (elements.image)
+    window.sr.reveal(elements.image, { delay: 0, scale: 0.8, origin: "left" });
+  if (elements.text)
+    window.sr.reveal(elements.text, { delay: 200, distance: "30px" });
+  if (elements.title)
+    window.sr.reveal(elements.title, { delay: 400, distance: "30px" });
+  if (elements.description)
+    window.sr.reveal(elements.description, { delay: 600, distance: "30px" });
+  if (elements.cta)
+    window.sr.reveal(elements.cta, { delay: 800, distance: "30px" });
+}
 
 // About section animations
-const aboutAnimations = () => {
-  gsap.from(".about-image", {
-    x: -100,
-    opacity: 0,
-    duration: 1,
-    scrollTrigger: {
-      trigger: ".about-image",
-      start: "top 80%",
-      end: "top 20%",
-      toggleActions: "play none none reverse",
-    },
-  });
+function initAboutAnimations() {
+  if (window.isAnimationsInitialized) return;
 
-  gsap.from(".about-content", {
-    x: 100,
-    opacity: 0,
-    duration: 1,
-    scrollTrigger: {
-      trigger: ".about-content",
-      start: "top 80%",
-      end: "top 20%",
-      toggleActions: "play none none reverse",
-    },
-  });
+  const elements = {
+    image: document.querySelector(".about-image"),
+    content: document.querySelector(".about-content"),
+    metrics: document.querySelectorAll(".about-metric"),
+  };
 
-  gsap.from(".about-metric", {
-    y: 50,
-    opacity: 0,
-    duration: 0.8,
-    stagger: 0.2,
-    scrollTrigger: {
-      trigger: ".about-metrics",
-      start: "top 80%",
-      end: "top 20%",
-      toggleActions: "play none none reverse",
-    },
-  });
-};
+  if (elements.image)
+    window.sr.reveal(elements.image, { delay: 0, scale: 0.8, origin: "left" });
+  if (elements.content)
+    window.sr.reveal(elements.content, {
+      delay: 200,
+      scale: 0.8,
+      origin: "right",
+    });
+  if (elements.metrics.length)
+    window.sr.reveal(elements.metrics, {
+      delay: 400,
+      interval: 200,
+      scale: 0.8,
+    });
+}
 
 // Timeline section animations
-const timelineAnimations = () => {
-  gsap.from(".timeline-item", {
-    y: 100,
-    opacity: 0,
-    duration: 1,
-    stagger: 0.3,
-    scrollTrigger: {
-      trigger: ".timeline-item",
-      start: "top 80%",
-      end: "top 20%",
-      toggleActions: "play none none reverse",
-    },
-  });
-};
+function initTimelineAnimations() {
+  if (window.isAnimationsInitialized) return;
+
+  const elements = document.querySelectorAll(".timeline-item");
+  if (elements.length)
+    window.sr.reveal(elements, { delay: 0, interval: 300, scale: 0.8 });
+}
 
 // Projects section animations
-const projectsAnimations = () => {
-  gsap.from(".project-card", {
-    scale: 0.9,
-    opacity: 0,
-    duration: 1,
-    stagger: 0.2,
-    scrollTrigger: {
-      trigger: ".project-card",
-      start: "top 80%",
-      end: "top 20%",
-      toggleActions: "play none none reverse",
-    },
-  });
-};
+function initProjectsAnimations() {
+  if (window.isAnimationsInitialized) return;
+
+  const elements = document.querySelectorAll(".project-card");
+  if (elements.length)
+    window.sr.reveal(elements, { delay: 0, interval: 200, scale: 0.8 });
+}
 
 // Testimonials section animations
-const testimonialsAnimations = () => {
-  // Heading animations
-  gsap.from(".testimonials-subtitle", {
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    scrollTrigger: {
-      trigger: ".testimonials-subtitle",
-      start: "top 70%",
-      end: "top 30%",
-      toggleActions: "play none none none",
-      once: true,
-      immediateRender: false,
-    },
-  });
+function initTestimonialsAnimations() {
+  if (window.isAnimationsInitialized) return;
 
-  gsap.from(".testimonials-title", {
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    delay: 0.2,
-    scrollTrigger: {
-      trigger: ".testimonials-title",
-      start: "top 70%",
-      end: "top 30%",
-      toggleActions: "play none none none",
-      once: true,
-      immediateRender: false,
-    },
-  });
+  const elements = {
+    subtitle: document.querySelector(".testimonials-subtitle"),
+    title: document.querySelector(".testimonials-title"),
+    description: document.querySelector(".testimonials-description"),
+  };
 
-  gsap.from(".testimonials-description", {
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    delay: 0.4,
-    scrollTrigger: {
-      trigger: ".testimonials-description",
-      start: "top 70%",
-      end: "top 30%",
-      toggleActions: "play none none none",
-      once: true,
-      immediateRender: false,
-    },
-  });
-};
+  if (elements.subtitle)
+    window.sr.reveal(elements.subtitle, { delay: 0, scale: 0.8 });
+  if (elements.title)
+    window.sr.reveal(elements.title, { delay: 200, scale: 0.8 });
+  if (elements.description)
+    window.sr.reveal(elements.description, { delay: 400, scale: 0.8 });
+}
 
 // Contact section animations
-const contactAnimations = () => {
-  gsap.from(".contact-info", {
-    x: -100,
-    opacity: 0,
-    duration: 1,
-    scrollTrigger: {
-      trigger: ".contact-info",
-      start: "top 70%",
-      end: "top 30%",
-      toggleActions: "play none none none",
-      once: true,
-      immediateRender: false,
-    },
-  });
+function initContactAnimations() {
+  if (window.isAnimationsInitialized) return;
 
-  gsap.from(".contact-form", {
-    x: 100,
-    opacity: 0,
-    duration: 1,
-    scrollTrigger: {
-      trigger: ".contact-form",
-      start: "top 70%",
-      end: "top 30%",
-      toggleActions: "play none none none",
-      once: true,
-      immediateRender: false,
-    },
-  });
-};
+  const elements = {
+    info: document.querySelector(".contact-info"),
+    form: document.querySelector(".contact-form"),
+  };
+
+  if (elements.info)
+    window.sr.reveal(elements.info, { delay: 0, scale: 0.8, origin: "left" });
+  if (elements.form)
+    window.sr.reveal(elements.form, {
+      delay: 200,
+      scale: 0.8,
+      origin: "right",
+    });
+}
 
 // Inspirations section animations
-const inspirationsAnimations = () => {
-  // Header animations
-  gsap.from(".inspiration-subtitle", {
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    scrollTrigger: {
-      trigger: ".inspiration-subtitle",
-      start: "top 70%",
-      end: "top 30%",
-      toggleActions: "play none none none",
-      once: true,
-      immediateRender: false,
-    },
-  });
+function initInspirationsAnimations() {
+  if (window.isAnimationsInitialized) return;
 
-  gsap.from(".inspiration-title", {
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    delay: 0.2,
-    scrollTrigger: {
-      trigger: ".inspiration-title",
-      start: "top 70%",
-      end: "top 30%",
-      toggleActions: "play none none none",
-      once: true,
-      immediateRender: false,
-    },
-  });
+  const elements = {
+    subtitle: document.querySelector(".inspiration-subtitle"),
+    title: document.querySelector(".inspiration-title"),
+    description: document.querySelector(".inspiration-description"),
+    mobileCards: document.querySelectorAll(".md\\:hidden .inspiration-card"),
+    desktopCards1: document.querySelectorAll(
+      ".hidden.md\\:block .absolute.top-\\[250px\\] .inspiration-card"
+    ),
+    desktopCards2: document.querySelectorAll(
+      ".hidden.md\\:block .absolute.top-\\[550px\\] .inspiration-card"
+    ),
+  };
 
-  gsap.from(".inspiration-description", {
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    delay: 0.4,
-    scrollTrigger: {
-      trigger: ".inspiration-description",
-      start: "top 70%",
-      end: "top 30%",
-      toggleActions: "play none none none",
-      once: true,
-      immediateRender: false,
-    },
-  });
-
-  // Mobile cards animations
-  gsap.from(".md\\:hidden .inspiration-card", {
-    scale: 0.8,
-    opacity: 0,
-    duration: 0.8,
-    stagger: 0.1,
-    scrollTrigger: {
-      trigger: ".md\\:hidden .inspiration-card",
-      start: "top 70%",
-      end: "top 30%",
-      toggleActions: "play none none none",
-      once: true,
-      immediateRender: false,
-    },
-  });
-
-  // Desktop cards animations - First Row
-  gsap.from(".hidden.md\\:block .absolute.top-\\[250px\\] .inspiration-card", {
-    scale: 0.8,
-    opacity: 0,
-    duration: 0.8,
-    stagger: 0.1,
-    scrollTrigger: {
-      trigger: ".hidden.md\\:block .absolute.top-\\[250px\\]",
-      start: "top 70%",
-      end: "top 30%",
-      toggleActions: "play none none none",
-      once: true,
-      immediateRender: false,
-    },
-  });
-
-  // Desktop cards animations - Second Row
-  gsap.from(".hidden.md\\:block .absolute.top-\\[550px\\] .inspiration-card", {
-    scale: 0.8,
-    opacity: 0,
-    duration: 0.8,
-    stagger: 0.1,
-    scrollTrigger: {
-      trigger: ".hidden.md\\:block .absolute.top-\\[550px\\]",
-      start: "top 70%",
-      end: "top 30%",
-      toggleActions: "play none none none",
-      once: true,
-      immediateRender: false,
-    },
-  });
-};
+  if (elements.subtitle)
+    window.sr.reveal(elements.subtitle, { delay: 0, scale: 0.8 });
+  if (elements.title)
+    window.sr.reveal(elements.title, { delay: 200, scale: 0.8 });
+  if (elements.description)
+    window.sr.reveal(elements.description, { delay: 400, scale: 0.8 });
+  if (elements.mobileCards.length)
+    window.sr.reveal(elements.mobileCards, {
+      delay: 600,
+      interval: 100,
+      scale: 0.8,
+    });
+  if (elements.desktopCards1.length)
+    window.sr.reveal(elements.desktopCards1, {
+      delay: 600,
+      interval: 100,
+      scale: 0.8,
+    });
+  if (elements.desktopCards2.length)
+    window.sr.reveal(elements.desktopCards2, {
+      delay: 800,
+      interval: 100,
+      scale: 0.8,
+    });
+}
 
 // Initialize all animations
-const initAnimations = () => {
-  // Register ScrollTrigger plugin
-  gsap.registerPlugin(ScrollTrigger);
+function initAnimations() {
+  if (window.isAnimationsInitialized) return;
 
-  // Clear any existing ScrollTrigger instances
-  ScrollTrigger.getAll().forEach((st) => st.kill());
+  try {
+    // Run all animations
+    initHomeAnimations();
+    initWorksAnimations();
+    initAboutAnimations();
+    initTimelineAnimations();
+    initProjectsAnimations();
+    initTestimonialsAnimations();
+    initContactAnimations();
+    initInspirationsAnimations();
 
-  // Initialize animations
-  homeAnimations();
-  worksAnimations();
-  aboutAnimations();
-  timelineAnimations();
-  projectsAnimations();
-  testimonialsAnimations();
-  contactAnimations();
-  inspirationsAnimations();
-};
+    window.isAnimationsInitialized = true;
+  } catch (error) {
+    console.error("Error initializing animations:", error);
+  }
+}
 
-// Run animations when DOM is loaded
-document.addEventListener("DOMContentLoaded", initAnimations);
+// Initialize when DOM is loaded
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initAnimations);
+} else {
+  initAnimations();
+}
 
-// Refresh animations when page is fully loaded
-window.addEventListener("load", () => {
+// Refresh ScrollTrigger on window resize
+window.addEventListener("resize", () => {
   ScrollTrigger.refresh();
 });

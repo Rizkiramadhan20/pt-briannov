@@ -18,7 +18,8 @@ if (!isset($data['title']) || !isset($data['description']) || !isset($data['fram
 }
 
 // Database connection
-$db = new mysqli('localhost', 'root', '', 'compon');
+require_once '../../../config/db.php';
+$db = getDBConnection();
 
 if ($db->connect_error) {
     header('Content-Type: application/json');

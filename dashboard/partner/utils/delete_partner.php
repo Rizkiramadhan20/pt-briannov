@@ -25,14 +25,8 @@ if (!isset($data['id'])) {
 }
 
 // Database connection
-$db = new mysqli('localhost', 'root', '', 'compon');
-if ($db->connect_error) {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Database connection failed: ' . $db->connect_error
-    ]);
-    exit;
-}
+require_once '../../../config/db.php';
+$db = getDBConnection();
 
 // Get image path before deleting
 $stmt = $db->prepare("SELECT image FROM partners WHERE id = ?");

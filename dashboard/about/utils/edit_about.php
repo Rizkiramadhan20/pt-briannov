@@ -20,24 +20,34 @@ $metrics_json = $_POST['metrics'];
 $metrics = json_decode($metrics_json, true);
 
 // Validate metrics data format
-if (!is_array($metrics) || empty($metrics) || count($metrics) > 2) {
+if (!is_array($metrics)) {
     header('Content-Type: application/json');
-    echo json_encode(['success' => false, 'message' => 'Invalid metrics data format or too many metrics']);
+    echo json_encode(['success' => false, 'message' => 'Invalid metrics data format']);
     exit;
 }
 
-foreach ($metrics as $metric) {
-    if (!isset($metric['count']) || !isset($metric['title']) || 
-        !is_numeric($metric['count']) || !is_string($metric['title']) || 
-        empty($metric['title']) || $metric['count'] <= 0) {
+// Only validate metrics if they exist
+if (!empty($metrics)) {
+    if (count($metrics) > 2) {
         header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'message' => 'Invalid metric format. Count must be a positive number and title cannot be empty']);
+        echo json_encode(['success' => false, 'message' => 'Maximum 2 metrics allowed']);
         exit;
+    }
+
+    foreach ($metrics as $metric) {
+        if (!isset($metric['count']) || !isset($metric['title']) || 
+            !is_numeric($metric['count']) || !is_string($metric['title']) || 
+            empty($metric['title']) || $metric['count'] <= 0) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'Invalid metric format. Count must be a positive number and title cannot be empty']);
+            exit;
+        }
     }
 }
 
 // Database connection
-$db = new mysqli('localhost', 'root', '', 'compon');
+require_once '../../../config/db.php';
+$db = getDBConnection();
 
 if ($db->connect_error) {
     header('Content-Type: application/json');

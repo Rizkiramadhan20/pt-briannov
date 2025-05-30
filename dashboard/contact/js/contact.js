@@ -48,19 +48,22 @@ function closeModal(modalId) {
     }
   }
 
-  // Fallback: Hide modal manually
+  // Hide modal manually
   modal.classList.add("hidden");
   modal.setAttribute("aria-hidden", "true");
   modal.removeAttribute("aria-modal");
   modal.removeAttribute("role");
   modal.classList.remove("show");
 
-  // Remove ALL modal backdrops
+  // Remove ALL modal backdrops and overlays
   document
     .querySelectorAll(
-      ".modal-backdrop, .fixed.inset-0.bg-gray-900.bg-opacity-50"
+      ".modal-backdrop, .fixed.inset-0.bg-gray-900.bg-opacity-50, [data-modal-backdrop]"
     )
     .forEach((el) => el.remove());
+
+  // Remove overflow-hidden from body
+  document.body.classList.remove("overflow-hidden");
 }
 
 // View Message
@@ -171,6 +174,10 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify({ id: contactId }),
           });
 
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
           const result = await response.json();
 
           if (result.success) {
@@ -180,14 +187,58 @@ document.addEventListener("DOMContentLoaded", function () {
               .querySelector(`[data-id="${contactId}"]`)
               .closest("tr");
             row.remove();
-            // Close modal
+
+            // Close modal using Flowbite and force cleanup
             const modal = document.getElementById("deleteMessageModal");
-            const modalInstance = flowbite.Modal.getInstance(modal);
-            modalInstance.hide();
+            if (window.flowbite && window.flowbite.Modal) {
+              const modalInstance = window.flowbite.Modal.getInstance(modal);
+              if (modalInstance) {
+                // Attempt to hide using Flowbite's API
+                modalInstance.hide();
+
+                // Add a small delay before forceful cleanup
+                setTimeout(() => {
+                  // Force remove backdrop and reset body state
+                  const backdrop = document.querySelector(
+                    "[data-modal-backdrop]"
+                  );
+                  if (backdrop) {
+                    backdrop.remove();
+                  }
+                  document.body.classList.remove("overflow-hidden");
+
+                  // Ensure modal element is also truly hidden
+                  modal.classList.add("hidden");
+                  modal.setAttribute("aria-hidden", "true");
+                  modal.removeAttribute("aria-modal");
+                  modal.removeAttribute("role");
+                  modal.classList.remove("show");
+                }, 250); // Increased delay slightly
+              } else {
+                // Fallback if Flowbite instance not found
+                modal.classList.add("hidden");
+                modal.setAttribute("aria-hidden", "true");
+                const backdrop = document.querySelector(
+                  "[data-modal-backdrop]"
+                );
+                if (backdrop) backdrop.remove();
+                document.body.classList.remove("overflow-hidden");
+              }
+            } else {
+              // Fallback if Flowbite library is not available
+              const modal = document.getElementById("deleteMessageModal");
+              const backdrop = document.querySelector("[data-modal-backdrop]");
+
+              modal.classList.add("hidden");
+              modal.setAttribute("aria-hidden", "true");
+              if (backdrop) backdrop.remove();
+              document.body.classList.remove("overflow-hidden");
+            }
           } else {
             showToast(result.message || "Failed to delete message", "error");
           }
         } catch (error) {
+          console.error("Delete error:", error);
           showToast("An error occurred while deleting the message", "error");
         } finally {
           // Reset button state

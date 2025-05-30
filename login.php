@@ -16,21 +16,17 @@ if (isset($_SESSION['user'])) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-    tailwind.config = {
-        theme: {
-            extend: {}
-        }
-    }
-    </script>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <script src="https://cdn.tailwindcss.com" async></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
 </head>
 
 <body class="bg-gray-100 min-h-screen">
     <section class="flex flex-col lg:flex-row min-h-screen">
         <!-- Mobile Image Header -->
         <div class="lg:hidden relative h-80 sm:h-96 md:h-[500px]">
-            <img src="assets/login.jpg" alt="Art" class="w-full h-full object-cover" />
+            <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2070&auto=format&fit=crop"
+                alt="Art" class="w-full h-full object-cover" />
             <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                 <div class="text-center text-white p-4">
                     <img src="assets/logo.png" alt="Logo"
@@ -91,6 +87,7 @@ if (isset($_SESSION['user'])) {
             </div>
         </div>
     </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js" async></script>
 </body>
 
 </html>

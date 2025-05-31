@@ -179,12 +179,8 @@ function initInspirationsAnimations() {
     subtitle: document.querySelector(".inspiration-subtitle"),
     title: document.querySelector(".inspiration-title"),
     description: document.querySelector(".inspiration-description"),
-    mobileCards: document.querySelectorAll(".md\\:hidden .inspiration-card"),
-    desktopCards1: document.querySelectorAll(
-      ".hidden.md\\:block .absolute.top-\\[250px\\] .inspiration-card"
-    ),
-    desktopCards2: document.querySelectorAll(
-      ".hidden.md\\:block .absolute.top-\\[550px\\] .inspiration-card"
+    desktopCards: document.querySelectorAll(
+      ".hidden.md\\:block .inspiration-card"
     ),
   };
 
@@ -194,21 +190,9 @@ function initInspirationsAnimations() {
     window.sr.reveal(elements.title, { delay: 200, scale: 0.8 });
   if (elements.description)
     window.sr.reveal(elements.description, { delay: 400, scale: 0.8 });
-  if (elements.mobileCards.length)
-    window.sr.reveal(elements.mobileCards, {
+  if (elements.desktopCards.length)
+    window.sr.reveal(elements.desktopCards, {
       delay: 600,
-      interval: 100,
-      scale: 0.8,
-    });
-  if (elements.desktopCards1.length)
-    window.sr.reveal(elements.desktopCards1, {
-      delay: 600,
-      interval: 100,
-      scale: 0.8,
-    });
-  if (elements.desktopCards2.length)
-    window.sr.reveal(elements.desktopCards2, {
-      delay: 800,
       interval: 100,
       scale: 0.8,
     });

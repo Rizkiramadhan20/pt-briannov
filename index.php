@@ -1,86 +1,7 @@
 <?php
 session_start();
 require_once 'config/db.php';
-
-// Fetch home content
-$result = $db->query("SELECT * FROM home ORDER BY created_at DESC");
-$contents = [];
-if ($result) {
-    while ($row = $result->fetch_assoc()) {
-        $row['framework'] = json_decode($row['framework'], true);
-        $contents[] = $row;
-    }
-}
-
-// Fetch partners
-$partners_result = $db->query("SELECT * FROM partners ORDER BY created_at DESC");
-$partners = [];
-if ($partners_result) {
-    while ($row = $partners_result->fetch_assoc()) {
-        $partners[] = $row;
-    }
-}
-
-// Fetch about content
-$about_result = $db->query("SELECT * FROM about ORDER BY created_at DESC");
-$about_content = null;
-if ($about_result && $about_result->num_rows > 0) {
-    $about_content = $about_result->fetch_assoc();
-    $about_content['metrics'] = json_decode($about_content['metrics'], true);
-}
-
-// Fetch timeline content
-$timeline_result = $db->query("SELECT * FROM timeline ORDER BY created_at ASC");
-$timelines = [];
-if ($timeline_result) {
-    while ($row = $timeline_result->fetch_assoc()) {
-        $timelines[] = $row;
-    }
-}
-
-// Fetch works content
-$works_result = $db->query("SELECT * FROM works ORDER BY created_at DESC");
-$works = [];
-if ($works_result) {
-    while ($row = $works_result->fetch_assoc()) {
-        $works[] = $row;
-    }
-}
-
-// Fetch projects content
-$projects_result = $db->query("SELECT * FROM projects ORDER BY created_at DESC LIMIT 3");
-$projects = [];
-if ($projects_result) {
-    while ($row = $projects_result->fetch_assoc()) {
-        $projects[] = $row;
-    }
-}
-
-// Fetch inspiration content
-$inspiration_result = $db->query("SELECT * FROM inspiration ORDER BY created_at DESC");
-$inspirations = [];
-if ($inspiration_result) {
-    while ($row = $inspiration_result->fetch_assoc()) {
-        $inspirations[] = $row;
-    }
-}
-
-// Fetch testimonials
-$testimonials_result = $db->query("SELECT * FROM testimonials ORDER BY created_at DESC");
-$testimonials = [];
-if ($testimonials_result) {
-    while ($row = $testimonials_result->fetch_assoc()) {
-        // Assuming 'image' column from the database will be used for the logo
-        $row['logo_url'] = 'dashboard/' . $row['image']; // Construct the image path
-        $testimonials[] = $row;
-    }
-}
-
-// Get unique statuses for filter
-$statuses = array_unique(array_column($timelines, 'status'));
-
-// Get selected status from URL parameter
-$selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
+require_once 'fetch_data.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -160,7 +81,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
 
                 <!-- Call to Action Button -->
                 <a href="<?php echo htmlspecialchars($hero_content['href']); ?>" target="_blank"
-                    class="inline-block px-5 sm:px-6 md:px-8 w-fit mx-auto py-2.5 sm:py-3 bg-blue-600 text-white font-semibold text-sm sm:text-base md:text-lg rounded-full shadow-lg hover:bg-blue-700 transition duration-300 home-cta opacity-0 translate-y-12 scale-90">
+                    class="inline-block px-5 sm:px-6 md:px-8 w-fit mx-auto py-2.5 sm:py-3 bg-blue-600 text-white font-semibold text-sm sm:text-base md:text-lg rounded-full shadow-lg hover:bg-blue-700 transition duration-300 home-cta transform scale-95 hover:scale-105">
                     <span><?php echo htmlspecialchars($hero_content['labels']); ?></span>
                 </a>
 
@@ -447,10 +368,22 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
                     <div class="flex gap-4" style="min-width: max-content;">
                         <?php foreach ($inspirations as $inspiration): ?>
                         <div
-                            class="relative group overflow-hidden rounded-xl shadow-lg w-[240px] aspect-[4/3] flex-shrink-0 inspiration-card">
+                            class="relative overflow-hidden rounded-xl shadow-lg w-[240px] aspect-[4/3] flex-shrink-0 inspiration-card">
+                            <img src="dashboard/<?php echo htmlspecialchars($inspiration['image']); ?>"
+                                alt="Inspiration" class="w-full h-full object-cover" />
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Desktop Grid Layout -->
+                <div class="hidden md:block">
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+                        <?php foreach ($inspirations as $inspiration): ?>
+                        <div class="relative group overflow-hidden rounded-xl shadow-lg inspiration-card">
                             <img src="dashboard/<?php echo htmlspecialchars($inspiration['image']); ?>"
                                 alt="Inspiration"
-                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 group-hover:brightness-75" />
+                                class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110 group-hover:brightness-75" />
                             <div
                                 class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/40">
                                 <span
@@ -458,51 +391,6 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
                             </div>
                         </div>
                         <?php endforeach; ?>
-                    </div>
-                </div>
-
-                <!-- Desktop Absolute Layout -->
-                <div class="hidden md:block">
-                    <!-- First Row -->
-                    <div class="absolute top-[250px] left-0">
-                        <div class="grid grid-cols-5 gap-6">
-                            <?php 
-                            $firstRow = array_slice($inspirations, 0, 5);
-                            foreach ($firstRow as $inspiration): 
-                            ?>
-                            <div class="relative group overflow-hidden rounded-xl shadow-lg inspiration-card">
-                                <img src="dashboard/<?php echo htmlspecialchars($inspiration['image']); ?>"
-                                    alt="Inspiration"
-                                    class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110 group-hover:brightness-75" />
-                                <div
-                                    class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/40">
-                                    <span
-                                        class="text-white text-lg font-semibold"><?php echo htmlspecialchars($inspiration['title'] ?? 'Inspiration'); ?></span>
-                                </div>
-                            </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-
-                    <!-- Second Row -->
-                    <div class="absolute top-[550px] left-0">
-                        <div class="grid grid-cols-5 gap-2">
-                            <?php 
-                            $secondRow = array_slice($inspirations, 5, 5);
-                            foreach ($secondRow as $inspiration): 
-                            ?>
-                            <div class="relative group overflow-hidden rounded-xl shadow-lg inspiration-card">
-                                <img src="dashboard/<?php echo htmlspecialchars($inspiration['image']); ?>"
-                                    alt="Inspiration"
-                                    class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110 group-hover:brightness-75" />
-                                <div
-                                    class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/40">
-                                    <span
-                                        class="text-white text-lg font-semibold"><?php echo htmlspecialchars($inspiration['title'] ?? 'Inspiration'); ?></span>
-                                </div>
-                            </div>
-                            <?php endforeach; ?>
-                        </div>
                     </div>
                 </div>
                 <?php else: ?>
@@ -515,7 +403,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
         </section>
 
         <!-- Testimonials -->
-        <section class="py-8 sm:py-12 bg-white">
+        <section class="py-8 sm:py-12 bg-white relative">
             <div class="container px-4">
                 <div
                     class="flex flex-col gap-2 sm:gap-3 md:gap-4 items-center justify-center text-center max-w-2xl mx-auto">
@@ -781,3 +669,8 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';
 </body>
 
 </html>
+
+<script>
+window.appData =
+    <?php echo json_encode(['contents' => $contents, 'partners' => $partners, 'about_content' => $about_content, 'timelines' => $timelines, 'works' => $works, 'projects' => $projects, 'inspirations' => $inspirations, 'testimonials' => $testimonials, 'statuses' => $statuses, 'selected_status' => $selected_status]); ?>;
+</script>

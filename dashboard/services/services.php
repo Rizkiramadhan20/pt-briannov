@@ -10,11 +10,11 @@ $user = $_SESSION['user'];
 require_once '../../config/db.php';
 
 // Fetch all partners
-$result = $db->query("SELECT * FROM timeline ORDER BY created_at DESC");
-$timelines = [];
+$result = $db->query("SELECT id, title, description, image, created_at FROM services ORDER BY created_at DESC");
+$servicess = [];
 if ($result) {
     while ($row = $result->fetch_assoc()) {
-        $timelines[] = $row;
+        $servicess[] = $row;
     }
 }
 
@@ -26,7 +26,7 @@ include '../header.php';
 <html>
 
 <head>
-    <title>Timeline - Admin Dashboard</title>
+    <title>services - Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="/assets/logo.png">
     <!-- Preload critical resources -->
@@ -48,21 +48,21 @@ include '../header.php';
         <div class="p-6 rounded-xl bg-white shadow-lg transition-shadow duration-200">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div class="space-y-2">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Timeline</h2>
-                    <p class="text-gray-600 text-sm sm:text-base">Manage your timeline entries</p>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">services</h2>
+                    <p class="text-gray-600 text-sm sm:text-base">Manage your services entries</p>
                 </div>
 
-                <button data-modal-target="createTimelineModal" data-modal-toggle="createTimelineModal"
+                <button data-modal-target="createservicesModal" data-modal-toggle="createservicesModal"
                     class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-4 py-2 focus:outline-none transition-colors duration-200 text-white">
                     <i class='bx bx-plus text-xl'></i>
-                    Add Timeline Entry
+                    Add services Entry
                 </button>
             </div>
         </div>
 
-        <!-- Timeline List -->
+        <!-- services List -->
         <div class="mt-6">
-            <?php if (empty($timelines)): ?>
+            <?php if (empty($servicess)): ?>
             <div class="flex flex-col items-center justify-center py-12 px-4">
                 <svg class="w-32 h-32 text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
@@ -70,11 +70,11 @@ include '../header.php';
                         d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
                     </path>
                 </svg>
-                <h3 class="text-xl font-semibold text-gray-400 mb-2">No Timeline Entries Found</h3>
-                <p class="text-gray-500 text-center mb-4">Start by adding your first timeline entry.</p>
-                <button data-modal-target="createTimelineModal" data-modal-toggle="createTimelineModal"
+                <h3 class="text-xl font-semibold text-gray-400 mb-2">No services Entries Found</h3>
+                <p class="text-gray-500 text-center mb-4">Start by adding your first services entry.</p>
+                <button data-modal-target="createservicesModal" data-modal-toggle="createservicesModal"
                     class=" bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-4 py-2 focus:outline-none transition-colors duration-200">
-                    Add Your First Timeline Entry
+                    Add Your First services Entry
                 </button>
             </div>
             <?php else: ?>
@@ -85,45 +85,40 @@ include '../header.php';
                             <th scope="col" class="px-6 py-3 whitespace-nowrap md:whitespace-normal">Image</th>
                             <th scope="col" class="px-6 py-3 whitespace-nowrap md:whitespace-normal">Title</th>
                             <th scope="col" class="px-6 py-3 whitespace-nowrap md:whitespace-normal">Description</th>
-                            <th scope="col" class="px-6 py-3 whitespace-nowrap md:whitespace-normal">Status</th>
                             <th scope="col" class="px-6 py-3 whitespace-nowrap md:whitespace-normal">Created At</th>
                             <th scope="col" class="px-6 py-3 whitespace-nowrap md:whitespace-normal">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($timelines as $timeline): ?>
+                        <?php foreach ($servicess as $services): ?>
                         <tr class="border-b border-gray-200 hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap md:whitespace-normal">
                                 <div class="w-20 h-20">
-                                    <img src="../<?php echo htmlspecialchars($timeline['image']); ?>" alt="Timeline"
+                                    <img src="../<?php echo htmlspecialchars($services['image']); ?>" alt="services"
                                         class="w-full h-full object-contain rounded-lg bg-gray-800 p-2">
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap md:whitespace-normal">
-                                <?php echo htmlspecialchars($timeline['title']); ?></td>
+                                <?php echo htmlspecialchars($services['title']); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap md:whitespace-normal">
-                                <?php echo htmlspecialchars($timeline['description']); ?></td>
+                                <?php echo htmlspecialchars($services['description']); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap md:whitespace-normal">
-                                <?php echo htmlspecialchars($timeline['status']); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap md:whitespace-normal">
-                                <?php echo date('d M Y H:i', strtotime($timeline['created_at'])); ?>
+                                <?php echo date('d M Y H:i', strtotime($services['created_at'])); ?>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap md:whitespace-normal">
                                 <div class="flex items-center gap-2">
                                     <button type="button"
-                                        class="edit-timeline text-blue-500 hover:text-blue-400 transition-colors duration-200"
-                                        data-id="<?php echo $timeline['id']; ?>"
-                                        data-title="<?php echo htmlspecialchars($timeline['title']); ?>"
-                                        data-description="<?php echo htmlspecialchars($timeline['description']); ?>"
-                                        data-text="<?php echo htmlspecialchars($timeline['text']); ?>"
-                                        data-status="<?php echo htmlspecialchars($timeline['status']); ?>"
-                                        data-modal-target="editTimelineModal" data-modal-toggle="editTimelineModal">
+                                        class="edit-services text-blue-500 hover:text-blue-400 transition-colors duration-200"
+                                        data-id="<?php echo $services['id']; ?>"
+                                        data-title="<?php echo htmlspecialchars($services['title']); ?>"
+                                        data-description="<?php echo htmlspecialchars($services['description']); ?>"
+                                        data-modal-target="editservicesModal" data-modal-toggle="editservicesModal">
                                         <i class='bx bx-edit text-xl'></i>
                                     </button>
                                     <button type="button"
-                                        class="delete-timeline text-red-500 hover:text-red-400 transition-colors duration-200"
-                                        data-id="<?php echo $timeline['id']; ?>" data-modal-target="deleteTimelineModal"
-                                        data-modal-toggle="deleteTimelineModal">
+                                        class="delete-services text-red-500 hover:text-red-400 transition-colors duration-200"
+                                        data-id="<?php echo $services['id']; ?>" data-modal-target="deleteservicesModal"
+                                        data-modal-toggle="deleteservicesModal">
                                         <i class='bx bx-trash text-xl'></i>
                                     </button>
                                 </div>
@@ -137,17 +132,17 @@ include '../header.php';
         </div>
 
         <!-- Create Modal -->
-        <div id="createTimelineModal" tabindex="-1" aria-hidden="true"
+        <div id="createservicesModal" tabindex="-1" aria-hidden="true"
             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-md max-h-full">
                 <div class="relative bg-white rounded-lg shadow">
                     <div class="flex items-start justify-between p-4 border-b rounded-t border-gray-200">
                         <h3 class="text-xl font-semibold text-gray-900">
-                            Add Timeline Entry
+                            Add services Entry
                         </h3>
                         <button type="button"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
-                            data-modal-hide="createTimelineModal">
+                            data-modal-hide="createservicesModal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -155,7 +150,7 @@ include '../header.php';
                             </svg>
                         </button>
                     </div>
-                    <form id="createTimelineForm" class="p-6" enctype="multipart/form-data">
+                    <form id="createservicesForm" class="p-6" enctype="multipart/form-data">
                         <div class="mb-4">
                             <label for="title" class="block mb-2 text-sm font-medium text-gray-700">Title</label>
                             <input type="text" id="title" name="title"
@@ -168,18 +163,6 @@ include '../header.php';
                             <textarea id="description" name="description" rows="3"
                                 class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                 required></textarea>
-                        </div>
-                        <div class="mb-4">
-                            <label for="text" class="block mb-2 text-sm font-medium text-gray-700">Text</label>
-                            <textarea id="text" name="text" rows="3"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                required></textarea>
-                        </div>
-                        <div class="mb-4">
-                            <label for="status" class="block mb-2 text-sm font-medium text-gray-700">Status</label>
-                            <input type="text" id="status" name="status"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                required>
                         </div>
                         <div class="mb-6">
                             <label for="image" class="block mb-2 text-sm font-medium text-gray-700">Image</label>
@@ -217,7 +200,7 @@ include '../header.php';
                             </div>
                         </div>
                         <div class="flex items-center justify-end space-x-2">
-                            <button type="button" data-modal-hide="createTimelineModal"
+                            <button type="button" data-modal-hide="createservicesModal"
                                 class="text-gray-700 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cancel</button>
                             <button type="submit"
                                 class=" bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white">Upload</button>
@@ -228,17 +211,17 @@ include '../header.php';
         </div>
 
         <!-- Edit Modal -->
-        <div id="editTimelineModal" tabindex="-1" aria-hidden="true"
+        <div id="editservicesModal" tabindex="-1" aria-hidden="true"
             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-md max-h-full">
                 <div class="relative bg-white rounded-lg shadow">
                     <div class="flex items-start justify-between p-4 border-b rounded-t border-gray-200">
                         <h3 class="text-xl font-semibold text-gray-900">
-                            Edit Timeline Entry
+                            Edit services Entry
                         </h3>
                         <button type="button"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
-                            data-modal-hide="editTimelineModal">
+                            data-modal-hide="editservicesModal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -246,7 +229,7 @@ include '../header.php';
                             </svg>
                         </button>
                     </div>
-                    <form id="editTimelineForm" class="p-6">
+                    <form id="editservicesForm" class="p-6">
                         <input type="hidden" id="edit_id" name="id">
                         <div class="mb-4">
                             <label for="edit_title" class="block mb-2 text-sm font-medium ">Title</label>
@@ -259,18 +242,6 @@ include '../header.php';
                             <textarea id="edit_description" name="description" rows="3"
                                 class="border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                 required></textarea>
-                        </div>
-                        <div class="mb-4">
-                            <label for="edit_text" class="block mb-2 text-sm font-medium ">Text</label>
-                            <textarea id="edit_text" name="text" rows="3"
-                                class="border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                required></textarea>
-                        </div>
-                        <div class="mb-4">
-                            <label for="edit_status" class="block mb-2 text-sm font-medium ">Status</label>
-                            <input type="text" id="edit_status" name="status"
-                                class="border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                required>
                         </div>
                         <div class="mb-6">
                             <label for="edit_image" class="block mb-2 text-sm font-medium ">Image</label>
@@ -308,7 +279,7 @@ include '../header.php';
                             </div>
                         </div>
                         <div class="flex items-center justify-end space-x-2">
-                            <button type="button" data-modal-hide="editTimelineModal"
+                            <button type="button" data-modal-hide="editservicesModal"
                                 class="text-gray-700 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cancel</button>
                             <button type="submit"
                                 class=" bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white">Save
@@ -320,17 +291,17 @@ include '../header.php';
         </div>
 
         <!-- Delete Modal -->
-        <div id="deleteTimelineModal" tabindex="-1" aria-hidden="true"
+        <div id="deleteservicesModal" tabindex="-1" aria-hidden="true"
             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-md max-h-full">
                 <div class="relative bg-white rounded-lg shadow">
                     <div class="flex items-start justify-between p-4 border-b rounded-t border-gray-200">
                         <h3 class="text-xl font-semibold text-gray-900">
-                            Delete Timeline Entry
+                            Delete services Entry
                         </h3>
                         <button type="button"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
-                            data-modal-hide="deleteTimelineModal">
+                            data-modal-hide="deleteservicesModal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -339,10 +310,10 @@ include '../header.php';
                         </button>
                     </div>
                     <div class="p-6">
-                        <p class="text-gray-600 mb-4">Are you sure you want to delete this timeline entry? This action
+                        <p class="text-gray-600 mb-4">Are you sure you want to delete this services entry? This action
                             cannot be undone.</p>
                         <div class="flex items-center justify-end space-x-2">
-                            <button type="button" data-modal-hide="deleteTimelineModal"
+                            <button type="button" data-modal-hide="deleteservicesModal"
                                 class="text-gray-700 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cancel</button>
                             <button type="button" id="confirmDelete"
                                 class=" bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
@@ -381,7 +352,7 @@ include '../header.php';
         </div>
     </div>
 
-    <script src="js/timeline.js"></script>
+    <script src="js/services.js"></script>
 </body>
 
 </html>

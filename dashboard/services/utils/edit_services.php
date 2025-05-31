@@ -7,7 +7,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
 }
 
 // Validate required fields
-if (!isset($_POST['id']) || !isset($_POST['title']) || !isset($_POST['description']) || !isset($_POST['text']) || !isset($_POST['status'])) {
+if (!isset($_POST['id']) || !isset($_POST['title']) || !isset($_POST['description'])) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'All fields are required']);
     exit;
@@ -35,7 +35,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
     }
 
     // Create upload directory if it doesn't exist
-    $upload_dir = '../../uploads/timeline/';
+    $upload_dir = '../../uploads/services/';
     if (!file_exists($upload_dir)) {
         mkdir($upload_dir, 0777, true);
     }
@@ -46,17 +46,17 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
 
     // Move uploaded file
     if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
-        $image_path = 'uploads/timeline/' . $filename;
+        $image_path = 'uploads/services/' . $filename;
 
         // Delete old image
-        $stmt = $db->prepare("SELECT image FROM timeline WHERE id = ?");
+        $stmt = $db->prepare("SELECT image FROM services WHERE id = ?");
         $stmt->bind_param("i", $_POST['id']);
         $stmt->execute();
         $result = $stmt->get_result();
-        $timeline = $result->fetch_assoc();
+        $services = $result->fetch_assoc();
 
-        if ($timeline && file_exists('../../' . $timeline['image'])) {
-            unlink('../../' . $timeline['image']);
+        if ($services && file_exists('../../' . $services['image'])) {
+            unlink('../../' . $services['image']);
         }
     } else {
         header('Content-Type: application/json');
@@ -67,19 +67,19 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
 
 // Prepare and execute the query
 if ($image_path) {
-    $stmt = $db->prepare("UPDATE timeline SET title = ?, description = ?, text = ?, status = ?, image = ? WHERE id = ?");
-    $stmt->bind_param("sssssi", $_POST['title'], $_POST['description'], $_POST['text'], $_POST['status'], $image_path, $_POST['id']);
+    $stmt = $db->prepare("UPDATE services SET title = ?, description = ?, image = ? WHERE id = ?");
+    $stmt->bind_param("sssi", $_POST['title'], $_POST['description'], $image_path, $_POST['id']);
 } else {
-    $stmt = $db->prepare("UPDATE timeline SET title = ?, description = ?, text = ?, status = ? WHERE id = ?");
-    $stmt->bind_param("ssssi", $_POST['title'], $_POST['description'], $_POST['text'], $_POST['status'], $_POST['id']);
+    $stmt = $db->prepare("UPDATE services SET title = ?, description = ? WHERE id = ?");
+    $stmt->bind_param("ssi", $_POST['title'], $_POST['description'], $_POST['id']);
 }
 
 if ($stmt->execute()) {
     header('Content-Type: application/json');
-    echo json_encode(['success' => true, 'message' => 'Timeline entry updated successfully']);
+    echo json_encode(['success' => true, 'message' => 'services entry updated successfully']);
 } else {
     header('Content-Type: application/json');
-    echo json_encode(['success' => false, 'message' => 'Error updating timeline entry: ' . $stmt->error]);
+    echo json_encode(['success' => false, 'message' => 'Error updating services entry: ' . $stmt->error]);
 }
 
 $stmt->close();

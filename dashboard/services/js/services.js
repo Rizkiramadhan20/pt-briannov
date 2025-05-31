@@ -67,7 +67,7 @@ function removePreview() {
 }
 
 document
-  .getElementById("createTimelineForm")
+  .getElementById("createservicesForm")
   .addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -75,7 +75,7 @@ document
     const formData = new FormData(this);
 
     // Send data to server
-    fetch("utils/create_timeline.php", {
+    fetch("utils/create_services.php", {
       method: "POST",
       body: formData,
     })
@@ -89,22 +89,22 @@ document
       })
       .then((data) => {
         if (data.success) {
-          showToast("Timeline entry created successfully!", true);
+          showToast("services entry created successfully!", true);
           setTimeout(() => window.location.reload(), 1000);
         } else {
-          showToast("Error creating timeline entry: " + data.message, false);
+          showToast("Error creating services entry: " + data.message, false);
         }
       })
       .catch((error) => {
         console.error("Error:", error);
-        showToast("An error occurred while creating timeline entry", false);
+        showToast("An error occurred while creating services entry", false);
       });
   });
 
 // Delete functionality
 let currentDeleteId = null;
 
-document.querySelectorAll(".delete-timeline").forEach((button) => {
+document.querySelectorAll(".delete-services").forEach((button) => {
   button.addEventListener("click", function () {
     currentDeleteId = this.dataset.id;
   });
@@ -115,14 +115,14 @@ document.getElementById("confirmDelete").addEventListener("click", function () {
 
   const deleteText = this.querySelector(".delete-text");
   const deleteLoading = this.querySelector(".delete-loading");
-  const modal = document.getElementById("deleteTimelineModal");
+  const modal = document.getElementById("deleteservicesModal");
 
   // Show loading state
   deleteText.classList.add("hidden");
   deleteLoading.classList.remove("hidden");
   this.disabled = true;
 
-  fetch("utils/delete_timeline.php", {
+  fetch("utils/delete_services.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -151,19 +151,19 @@ document.getElementById("confirmDelete").addEventListener("click", function () {
           entry.remove();
         }
 
-        showToast("Timeline entry deleted successfully!", true);
+        showToast("services entry deleted successfully!", true);
 
         // If no entries left, reload to show empty state
         if (document.querySelectorAll("tbody tr").length === 0) {
           setTimeout(() => window.location.reload(), 1000);
         }
       } else {
-        showToast("Error deleting timeline entry: " + data.message, false);
+        showToast("Error deleting services entry: " + data.message, false);
       }
     })
     .catch((error) => {
       console.error("Error:", error);
-      showToast("An error occurred while deleting timeline entry", false);
+      showToast("An error occurred while deleting services entry", false);
     })
     .finally(() => {
       // Reset loading state
@@ -210,21 +210,17 @@ function removeEditPreview() {
 }
 
 // Edit functionality
-document.querySelectorAll(".edit-timeline").forEach((button) => {
+document.querySelectorAll(".edit-services").forEach((button) => {
   button.addEventListener("click", function () {
     const id = this.dataset.id;
     const title = this.dataset.title;
     const description = this.dataset.description;
-    const text = this.dataset.text;
-    const status = this.dataset.status;
     const image = this.closest("tr").querySelector("img").src;
 
     // Set form values
     document.getElementById("edit_id").value = id;
     document.getElementById("edit_title").value = title;
     document.getElementById("edit_description").value = description;
-    document.getElementById("edit_text").value = text;
-    document.getElementById("edit_status").value = status;
 
     // Set current image preview
     const preview = document.getElementById("edit_preview");
@@ -239,13 +235,13 @@ document.querySelectorAll(".edit-timeline").forEach((button) => {
 });
 
 document
-  .getElementById("editTimelineForm")
+  .getElementById("editservicesForm")
   .addEventListener("submit", function (e) {
     e.preventDefault();
 
     const formData = new FormData(this);
 
-    fetch("utils/edit_timeline.php", {
+    fetch("utils/edit_services.php", {
       method: "POST",
       body: formData,
     })
@@ -260,18 +256,18 @@ document
       .then((data) => {
         if (data.success) {
           // Hide modal
-          const modal = document.getElementById("editTimelineModal");
+          const modal = document.getElementById("editservicesModal");
           const modalInstance = new Modal(modal);
           modalInstance.hide();
 
-          showToast("Timeline entry updated successfully!", true);
+          showToast("services entry updated successfully!", true);
           setTimeout(() => window.location.reload(), 1000);
         } else {
-          showToast("Error updating timeline entry: " + data.message, false);
+          showToast("Error updating services entry: " + data.message, false);
         }
       })
       .catch((error) => {
         console.error("Error:", error);
-        showToast("An error occurred while updating timeline entry", false);
+        showToast("An error occurred while updating services entry", false);
       });
   });

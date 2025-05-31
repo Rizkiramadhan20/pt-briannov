@@ -14,7 +14,6 @@ require_once 'fetch_data.php';
     <link rel="stylesheet" href="style/style.css" />
     <!-- Core Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/scrollreveal"></script>
     <!-- Swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -32,7 +31,7 @@ require_once 'fetch_data.php';
     <!-- Custom Scripts -->
     <script src="js/main.js" defer></script>
     <script src="js/toast.js" defer></script>
-    <script src="js/animations.js" defer></script>
+    <!-- <script src="js/animations.js" defer></script> -->
     <?php if (isset($_SESSION['toast'])): ?>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -136,122 +135,132 @@ require_once 'fetch_data.php';
         </section>
 
         <!-- About -->
-        <section class="py-10 bg-white" id="about">
+        <section class="py-12 sm:py-16 md:py-20 bg-white" id="about">
             <div class="container px-4">
-                <?php if ($about_content):
-                ?>
-
-                <div class="flex flex-col md:flex-row justify-evenly overflow-hidden">
+                <?php if ($about_content): ?>
+                <div class="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12 items-center">
                     <!-- Left Side - Image -->
-                    <div class="relative about-image">
-                        <img src="dashboard/<?php echo htmlspecialchars($about_content['image']); ?>"
-                            alt="About Us Image" class="w-full h-full object-cover lg:rounded-l-xl">
+                    <div class="w-full lg:w-1/2 relative">
+                        <div
+                            class="relative rounded-xl sm:rounded-2xl overflow-hidden h-[500px] lg:h-[600px] bg-gray-50">
+                            <img src="dashboard/<?php echo htmlspecialchars($about_content['image']); ?>"
+                                alt="About Us Image"
+                                class="absolute inset-0 w-full h-full object-cover lg:object-contain p-2 sm:p-4">
+                        </div>
                     </div>
 
                     <!-- Right Side - Content -->
-                    <div
-                        class="flex p-4 sm:p-6 md:p-8 flex-col md:flex-row items-start md:items-center justify-center bg-gray-100 gap-6 md:gap-4 rounded rounded-md about-content">
-                        <div class="flex flex-col gap-4">
-                            <h3 class="text-2xl md:text-3xl font-bold text-gray-900">
+                    <div class="w-full lg:w-1/2 flex flex-col gap-6 sm:gap-8">
+                        <div class="flex flex-col gap-4 sm:gap-6">
+                            <div
+                                class="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-gray-200 bg-gray-50 text-gray-700 text-xs sm:text-sm font-medium">
+                                <i class='bx bx-info-circle text-blue-600'></i>
+                                About Us
+                            </div>
+
+                            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
                                 <?php echo htmlspecialchars($about_content['title']); ?>
                             </h3>
 
-                            <p class="text-gray-700 text-sm md:text-base leading-relaxed">
+                            <p class="text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed">
                                 <?php echo htmlspecialchars($about_content['text']); ?>
                             </p>
                         </div>
 
                         <?php if (!empty($about_content['metrics'])): ?>
-                        <div class="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-8 about-metrics">
-                            <div class="flex flex-wrap md:flex-nowrap gap-6 md:gap-8">
-                                <?php foreach ($about_content['metrics'] as $index => $metric): ?>
-                                <div class="flex flex-col items-start about-metric">
-                                    <h4 class="text-3xl md:text-4xl font-bold text-blue-600 mb-0">
-                                        <?php echo htmlspecialchars($metric['count']); ?>
-                                    </h4>
-                                    <p class="text-gray-600 text-sm">
-                                        <?php echo htmlspecialchars($metric['title']); ?>
-                                    </p>
-                                </div>
-
-                                <?php if ($index < count($about_content['metrics']) - 1): ?>
-                                <div class="hidden md:block w-px bg-gray-300 h-16"></div>
-                                <?php endif; ?>
-                                <?php endforeach; ?>
+                        <div class="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
+                            <?php foreach ($about_content['metrics'] as $metric): ?>
+                            <div
+                                class="flex flex-col gap-1 sm:gap-2 bg-blue-600 p-3 sm:p-4 md:p-6 rounded-lg sm:rounded-xl shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+                                <h4 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+                                    <?php echo htmlspecialchars($metric['count']); ?>
+                                </h4>
+                                <p class="text-white/90 text-xs sm:text-sm md:text-base font-medium">
+                                    <?php echo htmlspecialchars($metric['title']); ?>
+                                </p>
                             </div>
-
-                            <a href="#"
-                                class="inline-flex items-center justify-center px-6 md:px-8 py-4 md:py-6 bg-blue-600 text-white font-semibold rounded-full shadow-lg hover:bg-blue-700 transition duration-300 text-base md:text-lg w-full md:w-auto">Let's
-                                work</a>
+                            <?php endforeach; ?>
                         </div>
                         <?php endif; ?>
+
+                        <a href="#contact"
+                            class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-blue-600 text-white font-semibold rounded-full shadow-lg hover:bg-blue-700 transition duration-300 text-sm sm:text-base w-fit group">
+                            <span>Let's work together</span>
+                            <i
+                                class='bx bx-right-arrow-alt text-lg sm:text-xl group-hover:translate-x-1 transition-transform'></i>
+                        </a>
                     </div>
                 </div>
                 <?php else: ?>
-                <div class="text-center py-12">
-                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-600 mb-4">About Content Coming Soon</h3>
-                    <p class="text-gray-500">We're working on something amazing. Stay tuned!</p>
+                <div class="text-center py-8 sm:py-12">
+                    <h3 class="text-lg sm:text-xl md:text-2xl font-semibold text-gray-600 mb-3 sm:mb-4">About Content
+                        Coming Soon</h3>
+                    <p class="text-gray-500 text-sm sm:text-base">We're working on something amazing. Stay tuned!</p>
                 </div>
                 <?php endif; ?>
             </div>
         </section>
 
-        <!-- Timeline -->
-        <section class="py-10 bg-white" id="services">
-            <div class="container px-4 flex flex-col gap-10 md:gap-14">
-                <?php if (!empty($timelines)): ?>
-                <!-- Status Filter -->
-                <div class="flex items-end justify-end gap-8 mb-10">
-                    <?php foreach ($statuses as $index => $status): ?>
-                    <div class="flex items-center gap-2">
-                        <input type="radio" name="status-filter" id="status-<?php echo htmlspecialchars($status); ?>"
-                            class="form-radio h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300"
-                            data-status="<?php echo htmlspecialchars($status); ?>"
-                            onclick="filterTimeline('<?php echo htmlspecialchars($status); ?>')"
-                            <?php echo $index === 0 ? 'checked' : ''; ?> />
-                        <label for="status-<?php echo htmlspecialchars($status); ?>"
-                            class="ml-1 text-gray-700 text-base cursor-pointer select-none">
-                            <?php echo htmlspecialchars($status); ?>
-                        </label>
-                    </div>
-                    <?php endforeach; ?>
+        <!-- Services -->
+        <section class="py-16 bg-white" id="services">
+            <div class="container px-4">
+                <!-- Section Header -->
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-blue-600 font-medium text-sm uppercase tracking-wider">Our Services</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">What We Can Do For You</h2>
+                    <p class="text-gray-600 text-lg">We offer a comprehensive range of digital services to help your
+                        business grow and succeed in the digital world.</p>
                 </div>
 
-                <div id="timeline-container">
-                    <?php foreach ($timelines as $timeline): ?>
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 timeline-item mb-12 md:mb-16"
-                        data-status="<?php echo htmlspecialchars($timeline['status']); ?>">
-                        <!-- Timeline Content -->
-                        <div class="md:col-span-7 order-2 md:order-1">
-                            <div class="flex flex-col gap-3 md:gap-4">
-                                <p class="text-gray-700 text-sm md:text-base italic">
-                                    <?php echo htmlspecialchars($timeline['text']); ?>
-                                </p>
-
-                                <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">
-                                    <?php echo htmlspecialchars($timeline['title']); ?>
-                                </h3>
-
-                                <p class="text-gray-600 text-sm md:text-base leading-relaxed mb-4">
-                                    <?php echo htmlspecialchars($timeline['description']); ?>
-                                </p>
-                            </div>
+                <?php if (!empty($services)): ?>
+                <!-- Services Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <?php foreach ($services as $service): ?>
+                    <div
+                        class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-100 service-card">
+                        <!-- Service Icon -->
+                        <div
+                            class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-100 transition-colors duration-300">
+                            <i class='bx bx-palette text-2xl text-blue-600'></i>
                         </div>
 
-                        <!-- Timeline Image -->
-                        <div class="md:col-span-5 order-1 md:order-2 mb-4 md:mb-0">
-                            <img src="dashboard/<?php echo htmlspecialchars($timeline['image']); ?>"
-                                alt="<?php echo htmlspecialchars($timeline['title']); ?>"
-                                class="w-full h-44 sm:h-56 md:h-64 lg:h-[300px] object-cover rounded-lg shadow-lg">
+                        <!-- Service Content -->
+                        <div class="space-y-4">
+                            <h3
+                                class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                                <?php echo htmlspecialchars($service['title']); ?>
+                            </h3>
+
+                            <p class="text-gray-600 leading-relaxed">
+                                <?php echo htmlspecialchars($service['description']); ?>
+                            </p>
+
+                            <!-- Service Image -->
+                            <?php if (!empty($service['image'])): ?>
+                            <div class="mt-6 rounded-xl overflow-hidden">
+                                <img src="dashboard/<?php echo htmlspecialchars($service['image']); ?>"
+                                    alt="<?php echo htmlspecialchars($service['title']); ?>"
+                                    class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300">
+                            </div>
+                            <?php endif; ?>
+
+                            <!-- Learn More Link -->
+                            <div class="pt-4">
+                                <a href="#"
+                                    class="inline-flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors duration-300">
+                                    Learn More
+                                    <i
+                                        class='bx bx-right-arrow-alt ml-2 text-xl group-hover:translate-x-1 transition-transform'></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <?php endforeach; ?>
                 </div>
                 <?php else: ?>
-
                 <div class="text-center py-12">
-                    <h3 class="text-xl font-semibold text-gray-600 mb-4">Timeline Coming Soon</h3>
-                    <p class="text-gray-500">We're working on documenting our journey. Stay tuned!</p>
+                    <h3 class="text-xl font-semibold text-gray-600 mb-4">Services Coming Soon</h3>
+                    <p class="text-gray-500">We're working on our service offerings. Stay tuned!</p>
                 </div>
                 <?php endif; ?>
             </div>
@@ -672,5 +681,5 @@ require_once 'fetch_data.php';
 
 <script>
 window.appData =
-    <?php echo json_encode(['contents' => $contents, 'partners' => $partners, 'about_content' => $about_content, 'timelines' => $timelines, 'works' => $works, 'projects' => $projects, 'inspirations' => $inspirations, 'testimonials' => $testimonials, 'statuses' => $statuses, 'selected_status' => $selected_status]); ?>;
+    <?php echo json_encode(['contents' => $contents, 'partners' => $partners, 'about_content' => $about_content, 'services' => $services, 'works' => $works, 'projects' => $projects, 'inspirations' => $inspirations, 'testimonials' => $testimonials, 'statuses' => $statuses, 'selected_status' => $selected_status]); ?>;
 </script>

@@ -28,12 +28,12 @@ if ($about_result && $about_result->num_rows > 0) {
     $about_content['metrics'] = json_decode($about_content['metrics'], true);
 }
 
-// Fetch timeline content
-$timeline_result = $db->query("SELECT * FROM timeline ORDER BY created_at ASC");
-$timelines = [];
-if ($timeline_result) {
-    while ($row = $timeline_result->fetch_assoc()) {
-        $timelines[] = $row;
+// Fetch services content
+$services_result = $db->query("SELECT * FROM services ORDER BY created_at ASC");
+$services = [];
+if ($services_result) {
+    while ($row = $services_result->fetch_assoc()) {
+        $services[] = $row;
     }
 }
 
@@ -75,7 +75,7 @@ if ($testimonials_result) {
 }
 
 // Get unique statuses for filter
-$statuses = array_unique(array_column($timelines, 'status'));
+$statuses = array_unique(array_column($services, 'status'));
 
 // Get selected status from URL parameter
 $selected_status = isset($_GET['status']) ? $_GET['status'] : 'all';

@@ -22,14 +22,14 @@ if (!in_array($_FILES['image']['type'], $allowed_types)) {
 }
 
 // Validate required fields
-if (!isset($_POST['title']) || !isset($_POST['description']) || !isset($_POST['text']) || !isset($_POST['status'])) {
+if (!isset($_POST['title']) || !isset($_POST['description'])) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'All fields are required']);
     exit;
 }
 
 // Create upload directory if it doesn't exist
-$upload_dir = '../../uploads/timeline/';
+$upload_dir = '../../uploads/services/';
 if (!file_exists($upload_dir)) {
     mkdir($upload_dir, 0777, true);
 }
@@ -45,16 +45,16 @@ if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
     $db = getDBConnection();
 
     // Prepare and execute the query
-    $stmt = $db->prepare("INSERT INTO timeline (title, description, text, image, status) VALUES (?, ?, ?, ?, ?)");
-    $image_path = 'uploads/timeline/' . $filename;
-    $stmt->bind_param("sssss", $_POST['title'], $_POST['description'], $_POST['text'], $image_path, $_POST['status']);
+    $stmt = $db->prepare("INSERT INTO services (title, description, image) VALUES (?, ?, ?)");
+    $image_path = 'uploads/services/' . $filename;
+    $stmt->bind_param("sss", $_POST['title'], $_POST['description'], $image_path);
 
     if ($stmt->execute()) {
         header('Content-Type: application/json');
-        echo json_encode(['success' => true, 'message' => 'Timeline entry created successfully']);
+        echo json_encode(['success' => true, 'message' => 'services entry created successfully']);
     } else {
         header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'message' => 'Error saving timeline entry to database: ' . $stmt->error]);
+        echo json_encode(['success' => false, 'message' => 'Error saving services entry to database: ' . $stmt->error]);
     }
 
     $stmt->close();

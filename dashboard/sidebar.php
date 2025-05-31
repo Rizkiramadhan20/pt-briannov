@@ -62,11 +62,11 @@
             </li>
 
             <li>
-                <a href="/dashboard/timeline/timeline.php"
-                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group transition-all duration-200 <?= strpos($_SERVER['PHP_SELF'], 'timeline.php') !== false ? 'bg-blue-50 text-blue-600' : '' ?>">
+                <a href="/dashboard/services/services.php"
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group transition-all duration-200 <?= strpos($_SERVER['PHP_SELF'], 'services.php') !== false ? 'bg-blue-50 text-blue-600' : '' ?>">
                     <span
-                        class="material-icons <?= strpos($_SERVER['PHP_SELF'], 'timeline.php') !== false ? 'text-blue-600' : 'text-gray-600' ?> group-hover:text-gray-900 transition-colors duration-200">schedule</span>
-                    <span class="ml-3">Timeline</span>
+                        class="material-icons <?= strpos($_SERVER['PHP_SELF'], 'services.php') !== false ? 'text-blue-600' : 'text-gray-600' ?> group-hover:text-gray-900 transition-colors duration-200">miscellaneous_services</span>
+                    <span class="ml-3">Services</span>
                 </a>
             </li>
             <li>

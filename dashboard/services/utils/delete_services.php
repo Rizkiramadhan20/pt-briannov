@@ -29,38 +29,38 @@ require_once '../../../config/db.php';
 $db = getDBConnection();
 
 // Get image path before deleting
-$stmt = $db->prepare("SELECT image FROM timeline WHERE id = ?");
+$stmt = $db->prepare("SELECT image FROM services WHERE id = ?");
 $stmt->bind_param("i", $data['id']);
 $stmt->execute();
 $result = $stmt->get_result();
-$timeline = $result->fetch_assoc();
+$services = $result->fetch_assoc();
 
-if ($timeline) {
+if ($services) {
     // Delete the image file
-    $image_path = '../../' . $timeline['image'];
+    $image_path = '../../' . $services['image'];
     if (file_exists($image_path)) {
         unlink($image_path);
     }
 
     // Delete from database
-    $stmt = $db->prepare("DELETE FROM timeline WHERE id = ?");
+    $stmt = $db->prepare("DELETE FROM services WHERE id = ?");
     $stmt->bind_param("i", $data['id']);
 
     if ($stmt->execute()) {
         echo json_encode([
             'success' => true,
-            'message' => 'Timeline entry deleted successfully'
+            'message' => 'services entry deleted successfully'
         ]);
     } else {
         echo json_encode([
             'success' => false,
-            'message' => 'Error deleting timeline entry: ' . $stmt->error
+            'message' => 'Error deleting services entry: ' . $stmt->error
         ]);
     }
 } else {
     echo json_encode([
         'success' => false,
-        'message' => 'Timeline entry not found'
+        'message' => 'services entry not found'
     ]);
 }
 
